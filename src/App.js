@@ -7,6 +7,8 @@ import Users from './containers/Users/Users'
 import VideoGames from './containers/VideoGames/VideoGames'
 import axios from 'axios'
 import firebase from './Firebase'     // <------  import firebase
+import config from './config'
+import Triples from './containers/Tripletas/triples';
 
 class App extends Component {
 
@@ -20,7 +22,7 @@ class App extends Component {
   componentDidMount(){
     firebase.auth().onAuthStateChanged((user) =>{
         if (user) {
-            let path = `http://127.0.0.1:8080/signin?loginServiceId=${user.uid}`
+            let path = `${config.server}/signin?loginServiceId=${user.uid}`
             axios.post(path)
             .then(response=>{
                 let {userId} = response.data.data;
@@ -42,7 +44,7 @@ class App extends Component {
 
       firebase.auth().onAuthStateChanged((user) =>{
           if (user) {
-              let path = `http://127.0.0.1:8080/signin?loginServiceId=${user.uid}`
+              let path = `${config.server}/signin?loginServiceId=${user.uid}`
               axios.post(path)
               .then(response=>{
                   let {userId} = response.data.data;
@@ -87,6 +89,11 @@ class App extends Component {
           <Route
               path="/videogames"
               render={(props)=> <VideoGames {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
+          />
+
+          <Route
+              path="/triples"
+              render={(props)=> <Triples {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
 
           <Route

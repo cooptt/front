@@ -4,10 +4,36 @@ import axios from 'axios';
 import ModalSignIn from './../../components/Modals/ModalSignIn/ModalSignIn';
 import ModalSignUp from './../../components/Modals/ModalSignUp/ModalSignUp';
 import firebase from './../../Firebase'     // <------  import firebase
+import config from '../../config'
+
+import 'materialize-css/dist/css/materialize.min.css'
+import M from 'materialize-css/dist/js/materialize.min.js'
 
 import './Header.css'
+
 class Header extends Component {
-  state = {
+  constructor (props) {
+    super(props);
+
+    this.menuUnSigned = [
+      <Link to="/videogames"><i className="material-icons left">videogame_asset</i>VideoGames</Link>,
+      <Link to="/triples"><i className="material-icons left">share</i>Triples</Link>,
+      <button onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</button>,
+      <button onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</button>
+    ];
+
+    this.menuSigned = [
+      
+      <Link to="/videogames"><i className="material-icons left">videogame_asset</i>VideoGames</Link>,
+      <Link to="/triples"><i className="material-icons left">share</i>Triples</Link>,
+      <Link to="/users/profile/0"><i class="material-icons left">child_care</i>Perfil</Link>,
+      <button onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</button>
+    ];
+    let currentMenuOptions = this.menuUnSigned
+    if(this.props.userId!==null)
+        currentMenuOptions = this.menuSigned
+
+    this.state = {
       showSignIn: false,
       showSignUp: false,
       recent: false, // not used, to redirect when you are logged
@@ -16,7 +42,10 @@ class Header extends Component {
           password: "",
           firstName: "",
           lastName: ""
-      }
+      },
+      currentMenuOptions
+    }
+
   }
 
   /// start modals functions ////
@@ -31,6 +60,7 @@ class Header extends Component {
 
 
   signUpHandler = () =>{
+    console.log('Click');
     if(!this.state.showSignUp){
         this.setState({
           showSignIn:false,
@@ -120,20 +150,23 @@ class Header extends Component {
               email,
               userId: response.user.uid
           };
-          let path = `http://127.0.0.1:8080/signin?loginServiceId=${user.userId}`
+          let path = `${config.server}/signin?loginServiceId=${user.userId}`
+          console.log(path)
           return axios.post(path);
       })
       .then( response =>{
-            //always is a new user (firebase)
+            console.log(response)
+            //always is a new user (firebase)   
             let {userId} = response.data.data;
-            let pathUpdate = `http://127.0.0.1:8080/updateUserProperties?userId=${userId}`;
+            let pathUpdate = `${config.server}/updateUserProperties?userId=${userId}`;
             return axios.post(pathUpdate,user)
       })
       .then( response=>{
             this.setState({
-                showSignUp:false
+                showSignUp:false,
+                currentMenuOptions: this.menuSigned
             });
-            this.props.logout();
+            this.props.login();
       })
       .catch( error => {
           alert('Email con mal formato o ya registrado');
@@ -153,13 +186,14 @@ class Header extends Component {
               email,
               userId: response.user.uid
           };
-          let path = `http://127.0.0.1:8080/signin?loginServiceId=${user.userId}`
+          let path = `${config.server}/signin?loginServiceId=${user.userId}`
           return axios.post(path);
       })
       .then (response=>{
 
             this.setState({
-                showSignIn:false
+                showSignIn:false,
+                currentMenuOptions: this.menuSigned
             })
             this.props.login();
             //always is an old user (firebase)
@@ -172,7 +206,6 @@ class Header extends Component {
         console.log(error);
       });
   }
-
   loginWithGoogleHandler = () =>{
       let googleAuthProvider = new firebase.auth.GoogleAuthProvider;
       let user = {}
@@ -185,24 +218,23 @@ class Header extends Component {
               email: data.user.email,
               userId: data.user.uid
           }
-          let path = `http://127.0.0.1:8080/signin?loginServiceId=${user.userId}`
+          let path = `${config.server}/signin?loginServiceId=${user.userId}`
           return axios.post(path);
       })
       .then( response =>{
             /// always is updating, it's not necessary
             let {userId} = response.data.data;
-            let pathUpdate = `http://127.0.0.1:8080/updateUserProperties?userId=${userId}`;
+            let pathUpdate = `${config.server}/updateUserProperties?userId=${userId}`;
             return axios.post(pathUpdate,user)
       })
       .then( response =>{
 
             this.setState({
-                showSignIn:false
+                showSignIn:false,
+                currentMenuOptions: this.menuSigned
             })
             this.props.login();
-            this.setState({
-                recent:true
-            })
+            console.log('hereeeeeeeeeeeeee header.js login')
       })
       .catch( error =>{
         alert('Intenta iniciar sesión de nuevo');
@@ -211,21 +243,30 @@ class Header extends Component {
   }
 
 
-
-
   logOutHandler = () =>{
       firebase.auth().signOut()
       .then( ()=>{
           this.props.logout();
           this.setState({
-              recent:true
+              recent:true,
+              currentMenuOptions: this.menuUnSigned
           })
       })
   }
 
 
+  getMenu = () => {
+    let children = [];
+    //Inner loop to create children
+    for (let i = 0; i < this.state.currentMenuOptions.length ; i++) {
+      children.push(<li>{this.state.currentMenuOptions[i]}</li>);
+    }
+    //Create the parent and add the children
+    return <ul class="right hide-on-med-and-down">{children}</ul>;
+  }
 
   render() {
+
       let {showSignIn,showSignUp} = this.state;
       let modalSignIn=null;
       let modalSignUp=null;
@@ -254,25 +295,47 @@ class Header extends Component {
       let pathProfile=""
       if(this.props.userId!==null)
         pathProfile=`/users/profile/${this.props.userId}`;
-
+     console.log('props from header',this.props)
       return (
-        <div className="Header">
-          <nav>
-            <ul>
-                <li><Link to="/"> Home </Link></li>
-                <li><Link to="/users"> Usuarios </Link></li>
-                <li><Link to="/videogames"> Videojuegos </Link></li>
-                {(!this.props.authenticated)?<li onClick={this.signInHandler}> Iniciar Sesión  </li>:null}
-                {(!this.props.authenticated)?<li  onClick={this.signUpHandler}> Registrarse </li>:null}
-                {(this.props.authenticated)?<li><Link to={pathProfile}> Mi Perfil </Link></li>:null}
-                {(this.props.authenticated)?<li  onClick={this.logOutHandler}> Cerrar Sesión </li>:null}
-            </ul>
-          </nav>
-          {modalSignIn}
-          {modalSignUp}
-        </div>
+        // <div className="Header">
+        //   <nav>
+        //     <ul>
+        //         <li><Link to="/"> Home </Link></li>
+        //         <li><Link to="/users"> Usuarios </Link></li>
+        //         <li><Link to="/videogames"> Videojuegos </Link></li>
+
+        //         {(!this.props.authenticated)?<li onClick={this.signInHandler}> Iniciar Sesión  </li>:null}
+        //         {(!this.props.authenticated)?<li  onClick={this.signUpHandler}> Registrarse </li>:null}
+        //         {(this.props.authenticated)?<li><Link to={pathProfile}> Mi Perfil </Link></li>:null}
+        //         {(this.props.authenticated)?<li  onClick={this.logOutHandler}> Cerrar Sesión </li>:null}
+
+        //     </ul>
+        //   </nav>
+        //   {modalSignIn}
+        //   {modalSignUp}
+        // </div>
+
+        // LINKS NEED TO BE ADDED
+
+      <div className="navbar-fixed">
+        <nav>
+          <div className="nav-wrapper">
+            <a href="#!" className="left brand-logo">
+              <i class="small material-icons">
+                group_add
+              </i>
+              Matching
+            </a>
+            {this.getMenu()}
+          </div>
+        </nav>
+        {modalSignIn}
+        {modalSignUp}
+      </div>
+
      );
   }
 }
+
 
 export default Header;
