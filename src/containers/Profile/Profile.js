@@ -21,71 +21,9 @@ const matchingR = {
 
 const fakeMatchingsIni = Array(4).fill(matching);
 const fakeMatchingsResponse = Array(10).fill(matchingR);
-const fakeAutocompleteData = {
-  "Mario bros": 'https://http2.mlstatic.com/mario-bros-gorra-gamers-nintendo-envio-gratis-luigi-D_NQ_NP_953147-MLM26833406717_022018-F.jpg',
-  "Mario bros 64": 'https://images-na.ssl-images-amazon.com/images/I/810bIPlGhSL._SL1500_.jpg',
-  "Mario bros PS4": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
-  "Mario bros 3DS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
-  "Mario bros PS4as": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
-  "Mario bros 3DasS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
-  "Mario bros PSsads4": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
-  "Mario bros 3DasdaS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
-  "Mario bros PS4asdasda": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
-  "Mario bros 3DSadad": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
-  "Mario bros PS4adsasda": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
-  "Mario bros 3DSadsadsad": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
-  "God of war": fakeImageUrl
-};
-
-class Carousel extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.counter = 10;
-
-    this.state = {
-      matchings: fakeMatchingsIni
-    };
-  }
-
-  handleClick() {
-    console.log('CLICK ' + this.counter);
-    this.counter++;
-    this.setState({matchings: fakeMatchingsResponse});
-    this.carouselMatchings.next(1);
-  };
-
-  carouselItemTag = (carouselItem) => {
-    return (
-      <a className = "carousel-item">
-      {/* <img src={'http://localhost:8080/' + carouselItem.image} onClick={this.handleClick.bind(this)}></img> */}
-        <img src={'http://localhost:8080/' + carouselItem.image}></img>
-      </a>
-    );
-  }
 
 
-  // this.setState({matchings: response.data})
-  componentDidMount() {
-    
-    fetch(`${config.server}/getUserMatchingVideoGames?userId=0`)
-    .then(response => response.json())
-    .then(response => this.setState({matchings: response.data}))
-    .catch(err => console.error(err));
 
-    let elem = document.querySelector('#carousel-matchings');
-    this.carouselMatchings = M.Carousel.init(elem, {numVisible: 5});
-  }
-  
-  render() {
-    return (
-      <div className="carousel" id="carousel-matchings">
-        {this.state.matchings.map(this.carouselItemTag)}
-      </div>
-    );
-  }
-};
 
 //AUTOCOMPLETE COMPONENT
 // props = {
@@ -167,10 +105,10 @@ class InputFieldCustomized extends Component {
   render() {
     return(
       <div>
-        <div class="input-field col s4">
-          <i class="material-icons prefix">{this.props.icon}</i>
+        <div className="input-field col s4">
+          <i className="material-icons prefix">{this.props.icon}</i>
           <input id={this.props.name} type="text"></input>
-          <label for={this.props.name}>{this.props.initialText}</label>
+          <label htmlFor={this.props.name}>{this.props.initialText}</label>
         </div>
       </div>
     );
@@ -237,15 +175,16 @@ class OptionButton extends Component{
     console.log('VideoGameName:' + videoGameName);
     console.log('price:' + price);
 
-    let userId = 0;
+    // CHECK
+    let userId = this.props.userId;
 
     let finalUrl;
     
     // Sale offer
     if(document.querySelector('#offerType').checked)
-      finalUrl = `${config.server}/addSellOffer?userId=` + this.props.userId + '&videoGameId=' + videoGameId + '&price=' + price;
+      finalUrl = `${config.server}/addSellOffer?userId=${userId}&videoGameId=${videoGameId}&price=${price}`;
     else
-      finalUrl = `${config.server}/addBuyOffer?userId=` + this.props.userId + '&videoGameId=' + videoGameId + '&price=' + price;
+      finalUrl = `${config.server}/addBuyOffer?userId=${userId}&videoGameId=${videoGameId}&price=${price}`;
     
     
     fetch(finalUrl,{method: 'POST'})
@@ -303,7 +242,7 @@ class OptionButton extends Component{
     return(
       <div>
         <div id="modal1" className="modal">
-          <div class="modal-content">
+          <div className="modal-content">
             <h4>Add Offer</h4>
             
             <br></br><br></br>
@@ -321,7 +260,7 @@ class OptionButton extends Component{
             <br></br>
           </div>
           
-          <div class="modal-footer" onClick = {this.handleClickOnCreateOffer.bind(this)}>
+          <div className="modal-footer" onClick = {this.handleClickOnCreateOffer.bind(this)}>
             <a className="modal-close waves-effect waves-blue btn-flat blue">
               <font color="white">Add Offer</font>
             </a>
@@ -335,9 +274,9 @@ class OptionButton extends Component{
           <i className="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a className="btn-floating green"><i class="material-icons">delete</i></a></li>
-          <li><a className="btn-floating purple"><i class="material-icons" onClick = {this.handleClickOnChange.bind(this)}>forward</i></a></li>
-          <li><a className="btn-floating blue"><i class="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
+          <li><a className="btn-floating green"><i className="material-icons">delete</i></a></li>
+          <li><a className="btn-floating purple"><i className="material-icons" onClick = {this.handleClickOnChange.bind(this)}>forward</i></a></li>
+          <li><a className="btn-floating blue"><i className="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
         </ul>
       </div>
 
@@ -426,59 +365,9 @@ const OfferCard = (props) => {
   );
 };
 
-class NavBar extends Component {
-  
-
-  render() {
-    return(
-      <div>
-        <nav>
-          <div className="nav-wrapper grey darken-2">
-            <a href="#!" className="left brand-logo"><i class="small material-icons">group_add</i>Matching</a>
-            <ul class="right hide-on-med-and-down">
-              <li>
-              
-
-              
-             </li>
-              <li><a href="#!"><i className="material-icons">view_module</i></a></li>
-              <li><a href="#!"><i className="material-icons">refresh</i></a></li>
-              <li><a href="#!"><i className="material-icons">more_vert</i></a></li>
-              <li><a href=""><i class="material-icons left" onclick = {this.handleClick}>portrait</i>Sign-In</a></li>
-            </ul>
-          </div>
-        </nav>
-
-      </div>
-    );
-  }
-}
-
-
-class MatchingPairs extends Component {
-  render () {
-    return(
-      <div className="col S5">
-      <br></br> <br></br>
-      <div class="row valign-wrapper grey lighten-3 hoverable">
-        <div class="col">
-          <img src={fakeImageUrl} alt="" class="circle responsive-img" height="10" width="50" ></img>
-        </div>
-        <div class="col">
-            <font size="1">This is a square image. Add the "circle" class to it to make it appear circular.</font>
-        </div>
-      </div>
-    </div>
-
-    );
-  }
-
-}
 
 
 class Profile extends Component {
-
-
   constructor(props) {
     super(props);
     //this.handleClick = this.handleClick.bind(this);
@@ -508,24 +397,23 @@ class Profile extends Component {
 
     })
     .catch(err => console.error(err));
-
-
   }
   
 
   render() {
     return (
       <div className="1">
-        
-
  
-      <Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
-      <br></br><br></br><br></br>
+        <Header 
+          authenticated={this.props.authenticated} 
+          login={this.props.logInHandler} 
+          logout={this.props.logOutHandler} 
+          userId={this.props.userId}
+        />
+        
+        <br></br><br></br><br></br>
 
-
-      <OptionButton nombreId={this.nombreId} autoCompleteData={this.autoCompleteData}/>
-      
-      
+        <OptionButton nombreId={this.nombreId} autoCompleteData={this.autoCompleteData}/>
 
       </div>
     );

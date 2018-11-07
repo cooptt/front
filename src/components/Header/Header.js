@@ -23,7 +23,6 @@ class Header extends Component {
     ];
 
     this.menuSigned = [
-      
       <Link to="/videogames"><i className="material-icons left">videogame_asset</i>VideoGames</Link>,
       <Link to="/triples"><i className="material-icons left">share</i>Triples</Link>,
       <Link to="/users/profile/0"><i class="material-icons left">child_care</i>Perfil</Link>,
@@ -317,17 +316,20 @@ class Header extends Component {
 
         // LINKS NEED TO BE ADDED
 
-      <div className="navbar-fixed">
+    <div className="navbar-fixed">
         <nav>
-          <div className="nav-wrapper">
-            <a href="#!" className="left brand-logo">
-              <i class="small material-icons">
-                group_add
-              </i>
-              Matching
-            </a>
-            {this.getMenu()}
-          </div>
+            <div className="nav-wrapper">
+                <Link to="/">
+                    <a className="left brand-logo">
+                        <i className="small material-icons">
+                            group_add
+                        </i>
+                        Matching
+                    </a>
+                </Link>
+                
+                {this.getMenu()}
+            </div>
         </nav>
         {modalSignIn}
         {modalSignUp}

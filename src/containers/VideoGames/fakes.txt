@@ -1,0 +1,68 @@
+const fakeImageUrl = 'https://i11d.3djuegos.com/juegos/11552/god_of_war_ps4__nombre_temporal_/fotos/ficha/god_of_war_ps4__nombre_temporal_-3754795.jpg';
+
+const videoGame0 = {
+  title: 'GOD OF WAR PS4',
+  image: 'catalogue/PS4/god_of_war.jpg',
+  videoGameId: 0
+};
+
+const videoGame1 = {
+  title: 'SPIDERMAN PS4',
+  image: 'https://www.gamestop.com/common/images/lbox/127511b.jpg',
+  videoGameId: 1
+};
+
+const videoGame2 = {
+  title: 'GTA PS4',
+  image: 'https://images-na.ssl-images-amazon.com/images/I/71fdwUZvh2L._SL1000_.jpg',
+  videoGameId: 2
+};
+
+const fakeCarouselImage = Array(4).fill(videoGame0);
+Array(10).fill(matchingR);
+
+
+const fakeAutocompleteData = {
+  "Mario bros": 'https://http2.mlstatic.com/mario-bros-gorra-gamers-nintendo-envio-gratis-luigi-D_NQ_NP_953147-MLM26833406717_022018-F.jpg',
+  "Mario bros 64": 'https://images-na.ssl-images-amazon.com/images/I/810bIPlGhSL._SL1500_.jpg',
+  "Mario bros PS4": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
+  "Mario bros 3DS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
+  "Mario bros PS4as": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
+  "Mario bros 3DasS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
+  "Mario bros PSsads4": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
+  "Mario bros 3DasdaS": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
+  "Mario bros PS4asdasda": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
+  "Mario bros 3DSadad": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
+  "Mario bros PS4adsasda": 'http://los40es00.epimg.net/los40/imagenes/2017/04/07/videojuegos/1491568225_523784_1491568523_noticia_normal.jpg',
+  "Mario bros 3DSadsadsad": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMmvfVfwmheyTSpI7yD5ucgeIaNY9FNkwDP0yBbuIKvIebcmutg',
+  "God of war": fakeImageUrl
+};
+
+const fakeAutocompleteData = [{title: videoGame0.title, videoGameId: videoGame0.videoGameId, image: videoGame0.image},
+{title: videoGame1.title, videoGameId: videoGame1.videoGameId, image: videoGame1.image},
+{title: videoGame2.title, videoGameId: videoGame2.videoGameId, image: videoGame2.image}];
+
+
+const fakeBuyOffers = ['','https://microhealth.com/assets/images/illustrations/personal-user-illustration-@2x.png','https://www.citrix.com/blogs/wp-content/uploads/2017/05/Citrix-Blog-User-Bio-Photo-5.png', 'https://userdefenders.com/wp-content/uploads/2018/05/Snapback-Hat-Model-324x324.jpg'];
+const fakeSellOffers = ['','https://www.citrix.com/blogs/wp-content/uploads/2017/05/Citrix-Blog-User-Bio-Photo-5.png', 'https://userdefenders.com/wp-content/uploads/2018/05/Snapback-Hat-Model-324x324.jpg'];
+
+
+const buyOffer = {
+  id: 1, 
+  userImageUrl: fakeBuyOffers[2],
+  personName: 'Jaime Daniel',
+  price: '89.2',
+  videoGameName: 'Juego xxxxxx'
+};
+
+const buyOffers = Array(10).fill(buyOffer);
+
+const sellOffer = {
+  id: 2,
+  userImageUrl: fakeBuyOffers[1],
+  personName: 'Luis Vazquez',
+  price: '90.2',
+  videoGameName: 'Juego yyyyyy'
+};
+
+const sellOffers = Array(4).fill(sellOffer);
