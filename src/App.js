@@ -9,17 +9,18 @@ import axios from 'axios'
 import firebase from './Firebase'     // <------  import firebase
 import config from './config'
 import Triples from './containers/Tripletas/triples';
-
+import Loader from 'react-loader'
 class App extends Component {
   state = {
       authenticated:false,
-      userId: null
+      userId: null,
+      loading: true
   }
 
   componentWillMount(){
-    firebase.auth().onAuthStateChanged((user) =>{  
+    firebase.auth().onAuthStateChanged((user) =>{
         console.log('jaaaaaaaaaaaames',user);
-              
+
         if (user) {
             let path = `${config.server}/signin?loginServiceId=${user.uid}`
             axios.post(path)
@@ -27,13 +28,15 @@ class App extends Component {
                 let {userId} = response.data.data;
                 this.setState({
                     authenticated:true,
-                    userId
+                    userId,
+                    loading: false
                 })
             })
         }else{
             this.setState({
                 authenticated:false,
-                userId:null
+                userId:null,
+                loading: false
             })
         }
     })
@@ -49,13 +52,15 @@ class App extends Component {
                   let {userId} = response.data.data;
                   this.setState({
                       authenticated:true,
-                      userId
+                      userId,
+                      loading: false
                   })
               })
           }else{
               this.setState({
                   authenticated:false,
-                  userId:null
+                  userId:null,
+                  loading: false
               })
           }
       })
@@ -64,13 +69,16 @@ class App extends Component {
   logOutHandler = () =>{
       this.setState({
           authenticated:false,
-          userId:null
+          userId:null,
+          loading: false
       })
   }
 
 
   render() {
     return (
+      (this.state.loading)?
+        <Loader loaded={true}/>:
       <div>
         <Switch>
           <Route
