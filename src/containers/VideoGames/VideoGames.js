@@ -27,13 +27,13 @@ class VideoGames extends Component {
 			sellOffers: [],
 			currentImagePos: 0
 		}
-	
+
         this.updateImagePos = this.updateImagePos.bind(this);
     }
 
     updateImagePos(pos) {
 		this.setState({currentImagePos: pos});
-		this.getVideoGameSellList(); 
+		this.getVideoGameSellList();
 		this.getVideoGameBuyList();
     }
 
@@ -43,19 +43,19 @@ class VideoGames extends Component {
       	let i = 0, j= 0;
 
       	let children = [];
-	  
+
 		//Inner loop to create children
     	while (i < this.state.buyOffers.length || j < this.state.sellOffers.length) {
         	if(i < this.state.buyOffers.length){
           		children.push(
             		<div className="col s4">
-              			<UserOfferCard 
+              			<UserOfferCard
                 			email={this.state.buyOffers[i].email}
-                			// userImageUrl={this.state.buyOffers[i].userImageUrl} 
+                			// userImageUrl={this.state.buyOffers[i].userImageUrl}
                 			userImageUrl='https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png'
-                			personName={this.state.buyOffers[i].firstName + ' ' + this.state.buyOffers[i].lastName} 
+                			personName={this.state.buyOffers[i].firstName + ' ' + this.state.buyOffers[i].lastName}
 							price={this.state.buyOffers[i].price}
-							userId={this.state.buyOffers[i].userId}	
+							userId={this.state.buyOffers[i].userId}
               			/>
             		</div>
           		);
@@ -68,10 +68,10 @@ class VideoGames extends Component {
           		children.push(
 					<div className="col s4">
 						<UserOfferCard
-							// userImageUrl={this.state.buyOffers[i].userImageUrl} 
+							// userImageUrl={this.state.buyOffers[i].userImageUrl}
 							userImageUrl='https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png'
 							email={this.state.sellOffers[j].email}
-							personName={this.state.sellOffers[j].firstName + ' ' + this.state.sellOffers[j].lastName} 
+							personName={this.state.sellOffers[j].firstName + ' ' + this.state.sellOffers[j].lastName}
 							price={this.state.sellOffers[j].price}
 							userId={this.state.sellOffers[j].userId}
 						/>
@@ -83,7 +83,7 @@ class VideoGames extends Component {
 
 		//Create the parent and add the children
 		table.push(<div className="row">{children}</div>);
-		  
+
 		return table;
 	}
 
@@ -91,7 +91,7 @@ class VideoGames extends Component {
 		console.log('PROPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',this.props);
 		console.log('HORA',this.props.location.state.initialPos)
 		//this.updateImagePos(this.props.location.state.initialPos);
-      	this.getVideoGameSellList(); 
+      	this.getVideoGameSellList();
       	this.getVideoGameBuyList();
     }
 
@@ -132,25 +132,25 @@ class VideoGames extends Component {
             <div>
                 {/* <Autocomplete name="catalogue" autoCompleteData={fakeAutocompleteData}/> */}
                 <Header
-					authenticated={this.props.authenticated} 
+					authenticated={this.props.authenticated}
 					login={this.props.logInHandler}
-					logout={this.props.logOutHandler} 
+					logout={this.props.logOutHandler}
 					userId={this.props.userId}
 				/>
 
                 <br></br>
-                
+
                 <Carousel updateImagePos={this.updateImagePos} initialPos={this.props.location.state.initialPos}/>
-                
+
                 <br></br>
 
 				<div className="center-sale-purchase-offers">
 					{this.createTableWithCurrentOffers()}
                 </div>
-                
-				<SideNavChat userId={this.props.userId}/>
-				
-				{/* 
+
+				{(this.props.userId!==null)?<SideNavChat userId={this.props.userId}/>:null}
+
+				{/*
 						var elmnt = document.getElementById("scrollPos");
 		elmnt.scrollTop = elmnt.scrollHeight;
 				{chat}
