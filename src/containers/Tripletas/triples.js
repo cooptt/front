@@ -41,7 +41,6 @@ class Triples extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.userId);
     fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
 		.then(response =>  response.json())
 		.then(response => {

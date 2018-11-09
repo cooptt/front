@@ -16,7 +16,6 @@ class App extends Component {
       userId: null,
       loading: true
   }
-
   componentDidMount(){
     firebase.auth().onAuthStateChanged((user) =>{
         if (user) {

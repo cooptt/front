@@ -88,8 +88,6 @@ class VideoGames extends Component {
 	}
 
     componentDidMount() {
-		console.log('PROPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',this.props);
-		console.log('HORA',this.props.location.state.initialPos)
 		//this.updateImagePos(this.props.location.state.initialPos);
       	this.getVideoGameSellList();
       	this.getVideoGameBuyList();
@@ -126,8 +124,6 @@ class VideoGames extends Component {
 	};
 
     render() {
-		let chat  = <Chat userId={0}/>
-		// console.log('USER ID EN VIDEOJUEGOS',this.props.authenticated);
         return(
             <div>
                 {/* <Autocomplete name="catalogue" autoCompleteData={fakeAutocompleteData}/> */}

@@ -18,7 +18,6 @@ class Header extends Component {
     this.state = {
       showSignIn: false,
       showSignUp: false,
-      recent: false, // not used, to redirect when you are logged
       controls : {
           email: "",
           password: "",
@@ -133,12 +132,11 @@ class Header extends Component {
               userId: response.user.uid
           };
           let path = `${config.server}/signin?loginServiceId=${user.userId}`
-          console.log(path)
           return axios.post(path);
       })
       .then( response =>{
             console.log(response)
-            //always is a new user (firebase)   
+            //always is a new user (firebase)
             let {userId} = response.data.data;
             let pathUpdate = `${config.server}/updateUserProperties?userId=${userId}`;
             return axios.post(pathUpdate,user)
@@ -179,9 +177,6 @@ class Header extends Component {
             })
             this.props.login();
             //always is an old user (firebase)
-            this.setState({
-                recent:true
-            })
       })
       .catch( error => {
         alert('Correo no existe o contraseña incorrecta');
@@ -229,7 +224,6 @@ class Header extends Component {
       .then( ()=>{
           this.props.logout();
           this.setState({
-              recent:true,
               currentMenuOptions: this.menuUnSigned
           })
       })
@@ -308,33 +302,35 @@ class Header extends Component {
                         Matching
                     </div>
                 </Link>
-                
+
                 <ul class="right hide-on-med-and-down">
-                {(this.props.userId)?<li><Link to={
-                        {
-                            pathname: "/videogames",
-                            state:{
-                                initialPos: 0
-                            }
+                 {//signed}
+                  {(this.props.userId)?<li><Link to={
+                          {
+                              pathname: "/videogames",
+                              state:{
+                                  initialPos: 0
+                              }
+                          }
+                  }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
+                  {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
+                  {(this.props.userId)?<li><Link to={"/users/profile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
+                  {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</a></li>:null}
+
+
+
+                  {//unsigned}
+                  {(!this.props.userId)?<li><Link to={
+                    {
+                        pathname: "/videogames",
+                        state:{
+                            initialPos: 0
                         }
-                }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
-                
-                {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
-                {(this.props.userId)?<li><Link to={"/users/profile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
-                {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</a></li>:null}
-
-
-                {(!this.props.userId)?<li><Link to={
-            {
-                pathname: "/videogames",
-                state:{
-                    initialPos: 0
-                }
-            }
-          }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
-       {(!this.props.userId)? <li><a onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</a></li>:null}
-       {(!this.props.userId)? <li><a onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</a></li>:null}
-       </ul>
+                    }
+                  }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
+                 {(!this.props.userId)? <li><a onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</a></li>:null}
+                 {(!this.props.userId)? <li><a onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</a></li>:null}
+               </ul>
             </div>
         </nav>
         {modalSignIn}
