@@ -304,7 +304,7 @@ class Header extends Component {
                 </Link>
 
                 <ul class="right hide-on-med-and-down">
-                 {//signed}
+
                   {(this.props.userId)?<li><Link to={
                           {
                               pathname: "/videogames",
@@ -319,7 +319,6 @@ class Header extends Component {
 
 
 
-                  {//unsigned}
                   {(!this.props.userId)?<li><Link to={
                     {
                         pathname: "/videogames",
