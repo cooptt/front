@@ -14,12 +14,11 @@ class Chat extends Component {
         }
     }
 
-
-
     componentWillMount(){
       let path = `${config.server}/getChatUsers?userId=${this.props.userId}`
       axios.get(path)
       .then( response =>{
+          console.log('USERS1',response.data.data);
           this.setState({
               users:response.data.data
           })
@@ -35,6 +34,7 @@ class Chat extends Component {
             let path = `${config.server}/getChatUsers?userId=${this.props.userId}`
             axios.get(path)
             .then( response =>{
+                console.log('USERS1',response.data.data);
                 this.setState({
                     users:response.data.data
                 })

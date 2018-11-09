@@ -3,6 +3,8 @@ import './tripletas.css';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
 import anime from 'animejs'
+import {Redirect } from 'react-router-dom';
+import config from '../../config'
 
 import Header from '../../components/Header/Header';
 
@@ -13,6 +15,14 @@ class Triples extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      cycles: [],
+      url1: '',
+      url2: '',
+      url3: '',
+      redirect: !(this.props.userId && this.props.userId===this.props.match.params.userId)
+    };
+
   }
 
   handleClick() {
@@ -25,10 +35,24 @@ class Triples extends Component {
 
     this.animacion3.play();
     this.animacion3.restart();
+
+    this.animacionGame1.play();
+    this.animacionGame2.play();
+    this.animacionGame3.play();
   };
 
   componentDidMount() {
-    //this.getVideoGames();
+    fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
+		.then(response =>  response.json())
+		.then(response => {
+      this.setState({cycles : response.data});
+      this.setState({url1: this.state.cycles[0][0].image});
+      this.setState({url2: this.state.cycles[0][1].image});
+      this.setState({url3: this.state.cycles[0][2].image});
+
+      console.log('CYCLES',this.state.cycles)
+		})
+		.catch(err => console.error(err));
     
     var elems = document.querySelectorAll('#hola');
     this.instances = M.Carousel.init(elems, {numVisible: 5});
@@ -38,9 +62,10 @@ class Triples extends Component {
     this.animacion1 = anime({
       autoplay: false,
       targets: '#id1',
+      borderRadius: '50%',
       translateX: [
         { value: -100, duration: 1500 },
-        { value: 0, duration: 1500 }
+        // { value: 0, duration: 1500 }
       ]
     });
 
@@ -48,9 +73,11 @@ class Triples extends Component {
       autoplay: false,
       targets: '#id2',
       translateY: [
-        { value: 180, duration: 1500 },
-        { value: 0, duration: 1500 }
-      ]
+        { value: 300, duration: 1500 },
+        // { value: 0, duration: 1500 }
+      ],
+      borderRadius: '50%',
+      backgroundColor: '#f96'
     });
 
     this.animacion3 = anime({
@@ -58,25 +85,96 @@ class Triples extends Component {
       targets: '#id3',
       translateX: [
         { value: 100, duration: 1500 },
-        { value: 0, duration: 1500 }
-      ]
+        // { value: 0, duration: 1500 }
+      ],
+      borderRadius: '50%',
     });
     
+    this.animacionGame1 = anime({
+      autoplay: false,
+      targets: '#image1',
+      translateX: [
+        { value: 245, duration: 1500 },
+        { value: 800, duration: 4000 },
+        // { value: 0, duration: 1500 }
+      ],
+      translateY: [
+        { value: -173, duration: 1500 },
+        // { value: 0, duration: 1500 }
+      ],
+      borderRadius: '50%',
+      delay: 1000
+    });
+
+    this.animacionGame2 = anime({
+      autoplay: false,
+      targets: '#image2',
+      translateX: [
+        { value: 1000, duration: 1500 },
+        { value: 725, duration: 4000, delay: 2000 },
+        // { value: 0, duration: 1500 }
+      ],
+      translateY: [
+        { value: -160, duration: 1500 },
+        { value: 30, duration: 4000, delay: 2000 },
+        // { value: 0, duration: 1500 }
+      ],
+      borderRadius: '50%',
+      delay: 1000
+    });
+
+    this.animacionGame3 = anime({
+      autoplay: false,
+      targets: '#image3',
+      translateX: [
+        { value: 315, duration: 1500 },
+        { value: 25, duration: 4000, delay: 3500 },
+        // { value: 0, duration: 1500 }
+      ],
+      translateY: [
+        { value: -60, duration: 1500 },
+        { value: -250, duration: 4000, delay: 3500 },
+        // { value: 0, duration: 1500 }
+      ],
+      borderRadius: '50%',
+      delay: 1000
+    });
+
+
   }
+
   
   render() {
     // const { videogames, videoGame } = this.state;
     return (
-      <div className>
+      <div className=''>
         
         <Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
-              
+
+        <br></br><br></br>
+        <br></br><br></br>   
         <button type="button" onClick = {this.handleClick.bind(this)}>PROBANDO</button>
 
         <div className="centerxx">
           {this.createTableWithCurrentOffers()}
         </div>
         
+        <br></br><br></br>
+
+        <div className="centerxx">
+          <div id="image1" className="videogame-image-cycle">
+            <img src={config.server + '/' + this.state.url1} alt="" class="responsive-img" width="70" heigh="70"></img>
+          </div>
+
+
+          <div id="image2" className="videogame-image-cycle">
+            <img src={config.server + '/' + this.state.url2} alt="" class="responsive-img" width="70" heigh="70"></img>
+          </div>
+
+          <div id="image3" className="videogame-image-cycle">
+            <img src={config.server + '/' + this.state.url2} alt="" class="responsive-img" width="70" heigh="70"></img>
+          </div>
+        </div>
 
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
         <br></br><br></br>
@@ -112,37 +210,10 @@ class Triples extends Component {
 
     return table;
   }
+
+  
 }
 
-//AUTOCOMPLETE COMPONENT
-// props = {
-//   name: 'name of the autocomplete field id=name',
-//   autoCompleteData: 'object name - url'
-// };
-class AutocompleteInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {
-    let elem = document.querySelector('#' + this.props.name);
-
-    this.instanceAutocomplete = M.Autocomplete.init(elem, {
-      data: this.props.autoCompleteData,
-      // limit: 4
-    });
-  }
-
-  render() {
-    return(
-      <div className="input-field">
-        <i className="material-icons prefix">search</i>
-        <input type="text" id={this.props.name} className="autocomplete"></input>
-        <label for={this.props.name}>VideoGame</label>
-      </div>
-    );}
-}
 
 // OFFERCARD COMPONENT
 // props = {

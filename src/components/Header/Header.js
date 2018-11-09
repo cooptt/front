@@ -7,30 +7,13 @@ import firebase from './../../Firebase'     // <------  import firebase
 import config from '../../config'
 
 import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
 
 import './Header.css'
 
 class Header extends Component {
   constructor (props) {
     super(props);
-
-    this.menuUnSigned = [
-      <Link to="/videogames"><i className="material-icons left">videogame_asset</i>VideoGames</Link>,
-      <Link to="/triples"><i className="material-icons left">share</i>Triples</Link>,
-      <button onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</button>,
-      <button onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</button>
-    ];
-
-    this.menuSigned = [
-      <Link to="/videogames"><i className="material-icons left">videogame_asset</i>VideoGames</Link>,
-      <Link to="/triples"><i className="material-icons left">share</i>Triples</Link>,
-      <Link to="/users/profile/0"><i class="material-icons left">child_care</i>Perfil</Link>,
-      <button onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</button>
-    ];
-    let currentMenuOptions = this.menuUnSigned
-    if(this.props.userId!==null)
-        currentMenuOptions = this.menuSigned
+    console.log(props)
 
     this.state = {
       showSignIn: false,
@@ -41,11 +24,11 @@ class Header extends Component {
           password: "",
           firstName: "",
           lastName: ""
-      },
-      currentMenuOptions
+      }
     }
 
   }
+
 
   /// start modals functions ////
   signInHandler = () =>{
@@ -59,7 +42,6 @@ class Header extends Component {
 
 
   signUpHandler = () =>{
-    console.log('Click');
     if(!this.state.showSignUp){
         this.setState({
           showSignIn:false,
@@ -119,6 +101,7 @@ class Header extends Component {
        let newControls = {
           ...this.state.controls
        }
+
        newControls.lastName = event.target.value;
        this.setState({
           controls:newControls
@@ -233,7 +216,6 @@ class Header extends Component {
                 currentMenuOptions: this.menuSigned
             })
             this.props.login();
-            console.log('hereeeeeeeeeeeeee header.js login')
       })
       .catch( error =>{
         alert('Intenta iniciar sesión de nuevo');
@@ -294,7 +276,6 @@ class Header extends Component {
       let pathProfile=""
       if(this.props.userId!==null)
         pathProfile=`/users/profile/${this.props.userId}`;
-     console.log('props from header',this.props)
       return (
         // <div className="Header">
         //   <nav>
@@ -320,15 +301,40 @@ class Header extends Component {
         <nav>
             <div className="nav-wrapper">
                 <Link to="/">
-                    <a className="left brand-logo">
+                    <div className="left brand-logo">
                         <i className="small material-icons">
                             group_add
                         </i>
                         Matching
-                    </a>
+                    </div>
                 </Link>
                 
-                {this.getMenu()}
+                <ul class="right hide-on-med-and-down">
+                {(this.props.userId)?<li><Link to={
+                        {
+                            pathname: "/videogames",
+                            state:{
+                                initialPos: 0
+                            }
+                        }
+                }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
+                
+                {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
+                {(this.props.userId)?<li><Link to={"/users/profile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
+                {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</a></li>:null}
+
+
+                {(!this.props.userId)?<li><Link to={
+            {
+                pathname: "/videogames",
+                state:{
+                    initialPos: 0
+                }
+            }
+          }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
+       {(!this.props.userId)? <li><a onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</a></li>:null}
+       {(!this.props.userId)? <li><a onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</a></li>:null}
+       </ul>
             </div>
         </nav>
         {modalSignIn}

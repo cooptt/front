@@ -1,0 +1,16 @@
+.user-picture {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+}
+ 
+
+.stars-div {
+    margin: auto;
+    width: 70px;
+    height: 10px;
+}
+
+.checked {
+    color: rgb(4, 130, 189);
+}

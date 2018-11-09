@@ -38,7 +38,6 @@ class SideNavChat extends Component {
     render() {
         return(
             <div>
-
                 <ul id="slide-out" className="sidenav">
                     <li>
                         <div className="user-view">
@@ -54,8 +53,8 @@ class SideNavChat extends Component {
                     </li>
                 
                     <li> 
-                        <Chat userId={0}/> 
-                        </li>
+                        <Chat userId={this.props.userId}/>
+                    </li>
                 </ul>
                 
                 <a class="btn-floating btn-large waves-effect waves-light blue right" onClick={this.handleOpenChat.bind(this)}><i class="material-icons">message</i></a>

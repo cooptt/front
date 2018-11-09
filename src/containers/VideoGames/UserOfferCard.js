@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
+import config from '../../config'
 
 // USEROFFERCARD
 // Props {
@@ -8,12 +10,15 @@ import React, { Component } from 'react';
 //   price
 // }
 const UserOfferCard = (props) => {
+	let linkToUserProfile = `/users/profile/${props.userId}`;
 	return (
 		<div className="user">
 			<div className="row valign-wrapper white hoverable z-depth-1">
 				<div className="col s3">
 					<div className="row"></div>
-					<img src={props.userImageUrl} alt="" className="hoverable img-circle responsive-img"></img>
+					<Link to={linkToUserProfile}>
+						<img src={props.userImageUrl} alt="" className="hoverable img-circle responsive-img"></img>
+					</Link>
 					<div className="row"></div>
 				</div>
 																

@@ -3,7 +3,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home'
 import Profile from './containers/Profile/Profile'
-import Users from './containers/Users/Users'
+import User from './containers/User/User'
 import VideoGames from './containers/VideoGames/VideoGames'
 import axios from 'axios'
 import firebase from './Firebase'     // <------  import firebase
@@ -11,16 +11,15 @@ import config from './config'
 import Triples from './containers/Tripletas/triples';
 
 class App extends Component {
-
-
   state = {
       authenticated:false,
       userId: null
   }
 
-
-  componentDidMount(){
-    firebase.auth().onAuthStateChanged((user) =>{
+  componentWillMount(){
+    firebase.auth().onAuthStateChanged((user) =>{  
+        console.log('jaaaaaaaaaaaames',user);
+              
         if (user) {
             let path = `${config.server}/signin?loginServiceId=${user.uid}`
             axios.post(path)
@@ -79,8 +78,8 @@ class App extends Component {
               render={(props)=> <Home {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
           <Route
-              path="/users"  exact
-              render={(props)=> <Users {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
+              path="/users/:userId"  exact
+              render={(props)=> <User {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
           <Route
               path="/users/profile/:userId"
@@ -92,7 +91,7 @@ class App extends Component {
           />
 
           <Route
-              path="/triples"
+              path="/triples/:userId"
               render={(props)=> <Triples {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
 

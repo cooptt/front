@@ -7,11 +7,10 @@ import './VideoGames.css';
 // External Components
 import Carousel from './Carousel';
 import UserOfferCard from './UserOfferCard';
+import UserOfferCardEmpty from './UserOfferCardEmpty';
 import Chat from '../../components/Chat/Chat';
 import Header from '../../components/Header/Header';
 import SideNavChat from './SideNavChat';
-
-import UserOfferCardEmpty from './UserOfferCardEmpty';
 
 // Server URL
 import config from '../../config'
@@ -55,7 +54,8 @@ class VideoGames extends Component {
                 			// userImageUrl={this.state.buyOffers[i].userImageUrl} 
                 			userImageUrl='https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png'
                 			personName={this.state.buyOffers[i].firstName + ' ' + this.state.buyOffers[i].lastName} 
-               	 			price={this.state.buyOffers[i].price}
+							price={this.state.buyOffers[i].price}
+							userId={this.state.buyOffers[i].userId}	
               			/>
             		</div>
           		);
@@ -73,6 +73,7 @@ class VideoGames extends Component {
 							email={this.state.sellOffers[j].email}
 							personName={this.state.sellOffers[j].firstName + ' ' + this.state.sellOffers[j].lastName} 
 							price={this.state.sellOffers[j].price}
+							userId={this.state.sellOffers[j].userId}
 						/>
 					</div>
           		);
@@ -87,10 +88,9 @@ class VideoGames extends Component {
 	}
 
     componentDidMount() {
-		var elmnt = document.getElementById("scrollPos");
-		elmnt.scrollTop = elmnt.scrollHeight;
-
-		console.log(this.props);
+		console.log('PROPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',this.props);
+		console.log('HORA',this.props.location.state.initialPos)
+		//this.updateImagePos(this.props.location.state.initialPos);
       	this.getVideoGameSellList(); 
       	this.getVideoGameBuyList();
     }
@@ -140,7 +140,7 @@ class VideoGames extends Component {
 
                 <br></br>
                 
-                <Carousel updateImagePos={this.updateImagePos}/>
+                <Carousel updateImagePos={this.updateImagePos} initialPos={this.props.location.state.initialPos}/>
                 
                 <br></br>
 
@@ -150,6 +150,9 @@ class VideoGames extends Component {
                 
 				<SideNavChat userId={this.props.userId}/>
 				
+				{/* 
+						var elmnt = document.getElementById("scrollPos");
+		elmnt.scrollTop = elmnt.scrollHeight;
 				{chat}
 				<div className = "scroll-test" id="scrollPos">
 					<div>gol</div><div>gol</div><div>gol</div><div>gol</div><div>gol</div><div>gol</div>
@@ -157,7 +160,7 @@ class VideoGames extends Component {
 					<div>gol</div><div>gol</div><div>gol</div><div>gol</div><div>gol</div><div>gol</div>
 
 				<div>gol</div><div>gol</div><div>gol</div><div>gol</div><div>gol</div>
-				</div>
+				</div> */}
             </div>
         );
     }

@@ -74,6 +74,7 @@ class Carousel extends Component {
 			let elem = document.querySelector('#carousel1');
 			
 			this.carousel = M.Carousel.init(elem, {onCycleTo: this.handleClickOnCarousel});
+			this.updateImagePos(this.props.initialPos);
 			console.log('THIS2',this);
       })
       .catch(err => console.error(err));

@@ -3,6 +3,7 @@ import './profile.css';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
 import config from '../../config'
+import {Link} from 'react-router-dom'
 import Header from '../../components/Header/Header';
 
 const fakeImageUrl = 'https://i11d.3djuegos.com/juegos/11552/god_of_war_ps4__nombre_temporal_/fotos/ficha/god_of_war_ps4__nombre_temporal_-3754795.jpg';
@@ -222,7 +223,7 @@ class OptionButton extends Component{
   }
 
   getSaleOffers = _ => {
-    fetch(`${config.server}/getUserSellList?userId=0`)
+    fetch(`${config.server}/getUserSellList?userId=${this.props.userId}`)
     .then(response => response.json())
     .then(response => {
       this.setState({offerList: response.data});
@@ -232,7 +233,7 @@ class OptionButton extends Component{
   }
 
   getPurchaseOffers = _ => {
-    fetch(`${config.server}/getUserBuyList?userId=0`)
+    fetch(`${config.server}/getUserBuyList?userId=${this.props.userId}`)
     .then(response => response.json())
     .then(response => this.purchaseOffers = response.data)
     .catch(err => console.error(err));
@@ -323,7 +324,9 @@ const OfferCard = (props) => {
       <div className="card hoverable">
 
       {/* LOCAL TESTING CHANGE src={'http://localhost:8080/' + props.image} */}
-      <img className="activator" src={config.server + '/' + props.offer.image} width="200" height="230"></img>
+      <Link to='/videogames'>
+        <img className="activator" src={config.server + '/' + props.offer.image} width="200" height="230"></img>
+      </Link>
 
       <div className="card-content">
         <span className="card-title activator grey-text text-darken-4">
@@ -413,7 +416,7 @@ class Profile extends Component {
         
         <br></br><br></br><br></br>
 
-        <OptionButton nombreId={this.nombreId} autoCompleteData={this.autoCompleteData}/>
+        <OptionButton nombreId={this.nombreId} autoCompleteData={this.autoCompleteData} userId={this.props.userId}/>
 
       </div>
     );
