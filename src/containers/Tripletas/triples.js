@@ -20,13 +20,12 @@ class Triples extends Component {
       url1: '',
       url2: '',
       url3: '',
-      redirect: !(this.props.userId && this.props.userId===this.props.match.params.userId)
+      stay:  this.props.userId!==null && parseInt(this.props.userId)===parseInt(this.props.match.params.userId)
     };
-
   }
 
+
   handleClick() {
-    console.log('CLICK');
     this.animacion1.play();
     this.animacion1.restart();
 
@@ -42,6 +41,7 @@ class Triples extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.match.params.userId);
     fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
 		.then(response =>  response.json())
 		.then(response => {
@@ -50,15 +50,11 @@ class Triples extends Component {
       this.setState({url2: this.state.cycles[0][1].image});
       this.setState({url3: this.state.cycles[0][2].image});
 
-      console.log('CYCLES',this.state.cycles)
 		})
 		.catch(err => console.error(err));
-    
+
     var elems = document.querySelectorAll('#hola');
     this.instances = M.Carousel.init(elems, {numVisible: 5});
-
-    console.log('INICIAMOS');
-
     this.animacion1 = anime({
       autoplay: false,
       targets: '#id1',
@@ -89,7 +85,7 @@ class Triples extends Component {
       ],
       borderRadius: '50%',
     });
-    
+
     this.animacionGame1 = anime({
       autoplay: false,
       targets: '#image1',
@@ -143,22 +139,25 @@ class Triples extends Component {
 
   }
 
-  
+
   render() {
     // const { videogames, videoGame } = this.state;
+
+    if(this.state.stay===false)
+      return <Redirect to='/'/>;
     return (
       <div className=''>
-        
+
         <Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
 
         <br></br><br></br>
-        <br></br><br></br>   
+        <br></br><br></br>
         <button type="button" onClick = {this.handleClick.bind(this)}>PROBANDO</button>
 
         <div className="centerxx">
           {this.createTableWithCurrentOffers()}
         </div>
-        
+
         <br></br><br></br>
 
         <div className="centerxx">
@@ -179,7 +178,7 @@ class Triples extends Component {
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
         <br></br><br></br>
 
-         
+
       <Footer/>
 
 
@@ -211,7 +210,7 @@ class Triples extends Component {
     return table;
   }
 
-  
+
 }
 
 
@@ -239,7 +238,7 @@ const UserOfferCard = (props) => {
             Videogame Name <br></br>
             $$ Price<br></br>
             <br></br>
-            
+
         </div>
       </div>
     </div>
@@ -258,7 +257,7 @@ const Footer = (props) => {
             <h5 class="white-text">Matching System</h5>
               <p class="grey-text text-lighten-4">You can buy and sell your videogames in this site.</p>
           </div>
-          
+
           <div class="col l4 offset-l2 s12">
             <h5 class="white-text">Links</h5>
               <ul>
@@ -273,7 +272,7 @@ const Footer = (props) => {
                     Git-Hub
                   </a>
                 </li>
-                
+
                 <li>
                   <a class="grey-text text-lighten-3" href="#!">
                     Link 3
@@ -283,7 +282,7 @@ const Footer = (props) => {
           </div>
         </div>
       </div>
-      
+
       <div class="footer-copyright">
         <div class="container">
           © 2014 Copyright Text
@@ -295,4 +294,3 @@ const Footer = (props) => {
 };
 
 export default Triples;
-

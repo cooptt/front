@@ -17,10 +17,8 @@ class App extends Component {
       loading: true
   }
 
-  componentWillMount(){
+  componentDidMount(){
     firebase.auth().onAuthStateChanged((user) =>{
-        console.log('jaaaaaaaaaaaames',user);
-
         if (user) {
             let path = `${config.server}/signin?loginServiceId=${user.uid}`
             axios.post(path)
