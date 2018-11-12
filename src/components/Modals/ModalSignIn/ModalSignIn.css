@@ -1,15 +1,16 @@
 .Modal{
   text-align: center;
+  color: rgb(2, 2, 2);
 }
 
 .ModalSignIn button{
-    background:#DD4B39;
+    background:rgb(1, 27, 73);
     margin: 30px;
     border-radius: 10px;
-    color: black;
+    color: rgb(255, 255, 255);
     width:70%;
     padding:20px;
-
+    font-size: 15px;
 }
 
 
@@ -17,11 +18,12 @@
     padding: 10px;
     margin: 2px;
     width: 60%;
+    color: white;
 }
 
 .ModalSignIn .inputButton{
   width: 70%;
-  background: gray;
+  background: rgb(255, 255, 255);
   color:black;
   border-radius: 5px;
   font-weight: bold;

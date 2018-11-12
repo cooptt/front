@@ -7,7 +7,7 @@ class Home extends Component {
     return (
       <div>
         <Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
-        <h1> React component with page info</h1>
+        <h1> home/ with page info</h1>
       </div>
     );
   }

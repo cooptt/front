@@ -9,7 +9,7 @@
     color: black;
     width:70%;
     padding:20px;
-
+    
 }
 
 
@@ -17,11 +17,13 @@
     padding: 10px;
     margin: 2px;
     width: 60%;
+    
+    color: white;
 }
 
 .ModalSignUp .inputButton{
     width: 70%;
-    background: gray;
+    background: rgb(255, 255, 255);
     color:black;
     border-radius: 5px;
     font-weight: bold;

@@ -7,10 +7,11 @@ class Chat extends Component {
 
 
     constructor(props){
+
         super(props);
         this.state={
             users:[],
-            destId:this.props.destId
+            destId:null
         }
     }
 
@@ -48,6 +49,11 @@ class Chat extends Component {
       clearInterval(this.interval);
     }
 
+    componentWillReceiveProps(nextProps){
+        //console.log('next',nextProps)
+        this.setState({destId:nextProps.destId})
+    }
+
     selectionHandler = id=>{
         let x = id.toString()
         this.setState({
@@ -58,7 +64,6 @@ class Chat extends Component {
 
 
     render() {
-
         let users = null
         users = this.state.users.map( user=>{
             return   <p key={user.userId} onClick={()=>this.selectionHandler(user.userId)} className='userchatx'> {user.firstName} {user.lastName} </p>

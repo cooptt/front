@@ -1,247 +1,272 @@
 import React, { Component } from 'react';
-import './tripletas.css';
-import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
 import anime from 'animejs'
+import 'materialize-css/dist/css/materialize.min.css'
 import {Redirect } from 'react-router-dom';
-import config from '../../config'
+import M from 'materialize-css/dist/js/materialize.min.js'
 
+// CSS styles
+import './tripletas.css';
+
+// External Components
 import Header from '../../components/Header/Header';
 
-const fakeImageUrls = ['','https://microhealth.com/assets/images/illustrations/personal-user-illustration-@2x.png','https://www.citrix.com/blogs/wp-content/uploads/2017/05/Citrix-Blog-User-Bio-Photo-5.png', 'https://userdefenders.com/wp-content/uploads/2018/05/Snapback-Hat-Model-324x324.jpg'];
+import Cycle from './Cycle';
+
+import Modal from './Modal';
+
+// Server URL
+import config from '../../config'
+
+const fakeImageUrls = ['','https://media.licdn.com/dms/image/C5603AQHyayaxPF3UMA/profile-displayphoto-shrink_200_200/0?e=1545264000&v=beta&t=s8M2QpHyZECTIT6qt15Zi7HN3IKGVtaefaQTzstI-Z0','https://www.citrix.com/blogs/wp-content/uploads/2017/05/Citrix-Blog-User-Bio-Photo-5.png', 'https://userdefenders.com/wp-content/uploads/2018/05/Snapback-Hat-Model-324x324.jpg'];
 //const fakeOffer = {image: fakeImageUrl, title: 'God of War', price: 442.3};
 
 class Triples extends Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			loading: true,
+			cycles: [],
+			currentCyclePos: 0,
+			startAnimation: false,
+			stay:  this.props.userId !== null && parseInt(this.props.userId) === parseInt(this.props.match.params.userId)
+		};
 
-  constructor(props){
-    super(props);
-    this.state = {
-      cycles: [],
-      url1: '',
-      url2: '',
-      url3: '',
-      stay:  this.props.userId!==null && parseInt(this.props.userId)===parseInt(this.props.match.params.userId)
-    };
-  }
+		this.cardId = 0;
+ 	}
 
+	/**
+	 * 
+	 * [
+     [ { userId: 0,
+      firstName: 'Felipe',
+      lastName: null,
+      videoGameId: 0,
+      title: 'Halo',
+      image: 'halo.jpg',
+      offerId: 1,
+      price: 500,
+      diff: 0 },
+    { userId: 1,
+      firstName: 'Jimbo',
+      lastName: null,
+      videoGameId: 1,
+      title: 'Gow',
+      image: 'gow.jpg',
+      offerId: 3,
+      price: 500,
+      diff: 0 },
+    { userId: 2,
+      firstName: 'Chore',
+      lastName: null,
+      videoGameId: 2,
+      title: 'Crash',
+      image: 'crash.jpg',
+      offerId: 5,
+      price: 500,
+      diff: 0 } ],
 
-  handleClick() {
-    this.animacion1.play();
-    this.animacion1.restart();
+  [ { userId: 0,
+      firstName: 'Felipe',
+      lastName: null,
+      videoGameId: 0,
+      title: 'Halo',
+      image: 'halo.jpg',
+      offerId: 1,
+      price: 500,
+      diff: 0 },
+    { userId: 1,
+      firstName: 'Jimbo',
+      lastName: null,
+      videoGameId: 1,
+      title: 'Gow',
+      image: 'gow.jpg',
+      offerId: 3,
+      price: 500,
+      diff: 0 },
+    { userId: 2,
+      firstName: 'Chore',
+      lastName: null,
+      videoGameId: 4,
+      title: 'Dbz',
+      image: 'dbz.jpg',
+      offerId: 8,
+      price: 500,
+      diff: 0 } ],
+  ]
+*/
+ 
+  handleCloseModal = _ => {
+		console.log('CLOSE MODAL');
+		this.setState({startAnimation: false});
+	}
 
-    this.animacion2.play();
-    this.animacion2.restart();
+	handleOpenModal = _ => {
+		console.log('OPEN MODAL');
+		this.setState({startAnimation: true});
+	}
 
-    this.animacion3.play();
-    this.animacion3.restart();
-
-    this.animacionGame1.play();
-    this.animacionGame2.play();
-    this.animacionGame3.play();
-  };
-
-  componentDidMount() {
-    fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
+  	componentDidMount() {
+    	fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
 		.then(response =>  response.json())
 		.then(response => {
-      this.setState({cycles : response.data});
-      this.setState({url1: this.state.cycles[0][0].image});
-      this.setState({url2: this.state.cycles[0][1].image});
-      this.setState({url3: this.state.cycles[0][2].image});
+			// console.log(response);
+			if(response.data.length > 0){
+				this.setState({cycles : response.data});
+			}
 
+			this.setState({loading: false});
 		})
 		.catch(err => console.error(err));
 
-    var elems = document.querySelectorAll('#hola');
-    this.instances = M.Carousel.init(elems, {numVisible: 5});
-    this.animacion1 = anime({
-      autoplay: false,
-      targets: '#id1',
-      borderRadius: '50%',
-      translateX: [
-        { value: -100, duration: 1500 },
-        // { value: 0, duration: 1500 }
-      ]
-    });
+		let elem = document.getElementById('animationModal');
+		this.modalInstance = M.Modal.init(elem, {onCloseEnd: this.handleCloseModal, onOpenEnd: this.handleOpenModal});
+	}
 
-    this.animacion2 = anime({
-      autoplay: false,
-      targets: '#id2',
-      translateY: [
-        { value: 300, duration: 1500 },
-        // { value: 0, duration: 1500 }
-      ],
-      borderRadius: '50%',
-      backgroundColor: '#f96'
-    });
+	render() {
+		console.log(this.state.currentCyclePos);
 
-    this.animacion3 = anime({
-      autoplay: false,
-      targets: '#id3',
-      translateX: [
-        { value: 100, duration: 1500 },
-        // { value: 0, duration: 1500 }
-      ],
-      borderRadius: '50%',
-    });
+    	if(this.state.stay === false)
+      		return <Redirect to='/'/>;
 
-    this.animacionGame1 = anime({
-      autoplay: false,
-      targets: '#image1',
-      translateX: [
-        { value: 245, duration: 1500 },
-        { value: 800, duration: 4000 },
-        // { value: 0, duration: 1500 }
-      ],
-      translateY: [
-        { value: -173, duration: 1500 },
-        // { value: 0, duration: 1500 }
-      ],
-      borderRadius: '50%',
-      delay: 1000
-    });
+		let modalContent = <div></div>;
 
-    this.animacionGame2 = anime({
-      autoplay: false,
-      targets: '#image2',
-      translateX: [
-        { value: 1000, duration: 1500 },
-        { value: 725, duration: 4000, delay: 2000 },
-        // { value: 0, duration: 1500 }
-      ],
-      translateY: [
-        { value: -160, duration: 1500 },
-        { value: 30, duration: 4000, delay: 2000 },
-        // { value: 0, duration: 1500 }
-      ],
-      borderRadius: '50%',
-      delay: 1000
-    });
+		if(this.state.cycles.length > 0)
+			modalContent = <Cycle triple={this.state.cycles[this.state.currentCyclePos]} startAnimation={this.state.startAnimation}></Cycle>;
 
-    this.animacionGame3 = anime({
-      autoplay: false,
-      targets: '#image3',
-      translateX: [
-        { value: 315, duration: 1500 },
-        { value: 25, duration: 4000, delay: 3500 },
-        // { value: 0, duration: 1500 }
-      ],
-      translateY: [
-        { value: -60, duration: 1500 },
-        { value: -250, duration: 4000, delay: 3500 },
-        // { value: 0, duration: 1500 }
-      ],
-      borderRadius: '50%',
-      delay: 1000
-    });
+		return (
+			<div>
 
+				<Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
 
-  }
+				<center>
+					<h5>Possible Triple Exchanges</h5>
+				</center>
 
+				{this.state.cycles.length === 0 ? 
+					<center>
+						<font color="gray">
+							<h5>You don't have any Possible Triple Exchanges</h5>
+						</font>
+					</center>
+					: null
+				}
 
-  render() {
-    // const { videogames, videoGame } = this.state;
+				<Modal modalName='animationModal' modalContent={modalContent}/>;
+				
+				<br></br>
 
-    if(this.state.stay===false)
-      return <Redirect to='/'/>;
-    return (
-      <div className=''>
+				{this.createTripleCards()}	
 
-        <Header authenticated={this.props.authenticated} login={this.props.logInHandler} logout={this.props.logOutHandler} userId={this.props.userId}/>
+				<Footer/>
+			</div>
+		);
+	}
 
-        <br></br><br></br>
-        <br></br><br></br>
-        <button type="button" onClick = {this.handleClick.bind(this)}>PROBANDO</button>
+	handleClickOnOffer(target){
+		anime({
+			autoplay: true,
+			targets: target,
+			translateX: [{value: '120%', duration: 3000}, {value: '0%', duration: 3000}],
+			borderRadius: '50%'
+	  	});
+	}
 
-        <div className="centerxx">
-          {this.createTableWithCurrentOffers()}
-        </div>
+	createTripleCards = _ => {
 
-        <br></br><br></br>
+		let table = [];
 
-        <div className="centerxx">
-          <div id="image1" className="videogame-image-cycle">
-            <img src={config.server + '/' + this.state.url1} alt="" class="responsive-img" width="70" heigh="70"></img>
-          </div>
+		for(let i = 0; i < this.state.cycles.length; i+=2){
+			let column1 = null;
+			let column2 = null;
+			
+			column1 = <div className = "col s6">
+						{this.createTripleCard(this.state.cycles[i], i)}
+					</div>;
 
+			if( i + 1 < this.state.cycles.length){
+				column2 = <div className = "col s6">
+							{this.createTripleCard(this.state.cycles[i + 1], i + 1)}
+						</div>;
+			}
 
-          <div id="image2" className="videogame-image-cycle">
-            <img src={config.server + '/' + this.state.url2} alt="" class="responsive-img" width="70" heigh="70"></img>
-          </div>
+			table.push(
+				<div className = "row" key = {'row' + table.length}>
+					{column1}
+					{column2}
+				</div>
+			);
 
-          <div id="image3" className="videogame-image-cycle">
-            <img src={config.server + '/' + this.state.url2} alt="" class="responsive-img" width="70" heigh="70"></img>
-          </div>
-        </div>
+		}
 
-        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-        <br></br><br></br>
+		return table;
+	}
 
+	handleClickOnAnimationButton(index) {
+		this.setState({currentCyclePos: index});
+	}
 
-      <Footer/>
+	createTripleCard = (currentTriple, index) => {
+		let content = [];
+		
+		for (let i = 0; i < currentTriple.length; i++, this.cardId++) {
+			let value = this.cardId;
+			content.push(
+				<div key = {'offerCard' + value}>
+					<div className={"offer-pos" + i}  id={'offerCard' + value} onClick = {() => this.handleClickOnOffer(`#offerCard${value}`)}>
+						<SingleTripleOfferCard
+							pos = {i + 1}
+							videoGameName = {currentTriple[i].title}
+							userName = {currentTriple[i].firstName + ' ' + currentTriple[i].lastName} 
+							price = {currentTriple[i].price}
+							id={value}/>
+					</div>
+					{(i===2) ?
+						<a data-target="animationModal" key = {'tripleButton' + index} onClick = { () => { this.handleClickOnAnimationButton(index)}} 
+							className="btn-floating modal-trigger light-blue darken-3 button-pos">
+							<i className="material-icons">play_circle_filled</i>
+						</a> : null
+					}
+				</div>
+			);
+			//this.cardId++;
+		}
 
-
-
-      </div>
-    );
-  }
-
-
-  createTableWithCurrentOffers = () => {
-    let table = [];
-
-    // Outer loop to create parent
-    let i = 0;
-    let x = 1;
-    let offersLength = 1;
-    while(i < offersLength) {
-      let children = [];
-      //Inner loop to create children
-      for (let j = 0; j < 3; j++) {
-        children.push(<div className="col s4"><UserOfferCard id={'id' + x} pos={x}/></div>);
-        x++;
-      }
-      i++;
-      //Create the parent and add the children
-      table.push(<div className="row">{children}</div>);
-    }
-
-    return table;
-  }
-
-
+		// Return Triple Card
+    	return (
+			<div>
+				<div className="centerTriple">
+					{content}
+				</div>
+			</div>
+		);
+  	}
 }
 
 
 // OFFERCARD COMPONENT
 // props = {
-//   image: 'url image',
-//   title: 'videoGames Name',
+//	 pos: ''
+//   userName: '',
+// 	 videoGameName: ''
 //   price: 'price',
-//   user: 'offers user NEEDS TO BE ADDED',
-//   handleClick(): 'NEEDS TO BE ADDED'
 // }
 
-const UserOfferCard = (props) => {
-  return (
-    <div className="user" id={props.id}>
-      <div class="row valign-wrapper white hoverable z-depth-1">
-        <div class="col s3">
-          <div className="row"></div>
-          <img src={fakeImageUrls[props.pos]} alt="" class="hoverable img-circle responsive-img"></img>
-          <div className="row"></div>
-        </div>
-        <div class="col s9">
-            Jaime Daniel Martinez Moreno
-            <br></br>
-            Videogame Name <br></br>
-            $$ Price<br></br>
-            <br></br>
-
-        </div>
-      </div>
-    </div>
-  );
+const SingleTripleOfferCard = (props) => {
+	return (
+    	<div>
+      		<div className="row valign-wrapper white hoverable z-depth-1" id={props.id}>
+        		<div className="col s12">
+          			<br></br>
+					<center>
+						<img src={fakeImageUrls[props.pos]} className="hoverable img-circle responsive-img"></img>
+						<p className="userNameTriple">{props.userName}</p>
+						<p className="videoGameNameTriple">{props.videoGameName}</p>
+						<p className="priceTriple">${props.price}</p>
+					</center>	
+        		</div>
+      		</div>
+    	</div>
+  	);
 };
 
 
@@ -249,31 +274,31 @@ const UserOfferCard = (props) => {
 // Replace for better organization
 const Footer = (props) => {
   return(
-    <footer class="page-footer black">
-      <div class="container">
-        <div class="row">
-          <div class="col l6 s12">
-            <h5 class="white-text">Matching System</h5>
-              <p class="grey-text text-lighten-4">You can buy and sell your videogames in this site.</p>
+    <footer className="page-footer black">
+      <div className="container">
+        <div className="row">
+          <div className="col l6 s12">
+            <h5 className="white-text">Matching System</h5>
+              <p className="grey-text text-lighten-4">You can buy and sell your videogames in this site.</p>
           </div>
 
-          <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
+          <div className="col l4 offset-l2 s12">
+            <h5 className="white-text">Links</h5>
               <ul>
                 <li>
-                  <a class="grey-text text-lighten-3" href="#!">
+                  <a className="grey-text text-lighten-3" href="#!">
                     Facebook
                   </a>
                 </li>
 
                 <li>
-                  <a class="grey-text text-lighten-3" href="#!">
+                  <a className="grey-text text-lighten-3" href="#!">
                     Git-Hub
                   </a>
                 </li>
 
                 <li>
-                  <a class="grey-text text-lighten-3" href="#!">
+                  <a className="grey-text text-lighten-3" href="#!">
                     Link 3
                   </a>
                 </li>
@@ -282,8 +307,8 @@ const Footer = (props) => {
         </div>
       </div>
 
-      <div class="footer-copyright">
-        <div class="container">
+      <div className="footer-copyright">
+        <div className="container">
           © 2014 Copyright Text
           {/* <a class="grey-text text-lighten-4 right" href="#!">More Links</a> */}
         </div>

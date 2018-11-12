@@ -138,7 +138,19 @@ class VideoGames extends Component {
 
                 <Carousel updateImagePos={this.updateImagePos} initialPos={this.props.location.state.initialPos}/>
 
-                <br></br>
+
+				<div className="row">
+					<div className="col s6">
+						<p className="purchase-title">Purchase Offers</p>
+
+					</div>
+
+					<div className="col s6">
+						<p className="sale-title">Sale Offers</p>
+					</div>
+				</div>
+
+				<br></br>
 
 				<div className="center-sale-purchase-offers">
 					{this.createTableWithCurrentOffers()}

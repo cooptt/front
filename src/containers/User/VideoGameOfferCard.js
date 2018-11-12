@@ -9,7 +9,6 @@ import {Link} from 'react-router-dom'
 //   price
 // }
 const VideoGameOfferCard = (props) => {
-	console.log('VIDEOGAMEID ->>>> ',props.videoGameId)
 	return (
 		<div className="user">
 			<div className="row valign-wrapper white z-depth-1">
@@ -22,7 +21,7 @@ const VideoGameOfferCard = (props) => {
 								initialPos: props.videoGameId
 							}
 						}
-					}><img src={props.imageUrl} alt="" className="hoverable responsive-img"></img></Link>
+					}><img src={props.imageUrl} className="hoverable responsive-img"></img></Link>
 					<div className="row"></div>
 				</div>
 																

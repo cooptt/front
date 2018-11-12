@@ -14,6 +14,7 @@ const ModalSignIn = (props) =>{
             <form onSubmit={props.loginEmail}>
                 <input placeholder="email" type="email" onChange={props.changeEmail}  required/>
                 <input placeholder="password" type="password" onChange={props.changePassword}  required/>
+                <br></br><br></br>
                 <input className="inputButton" type="submit" value="Iniciar Sesión"/>
             </form>
         </div>

@@ -1,5 +1,54 @@
-.App {
-  text-align: center;
+.purchase-title {
+  position: relative;
+  margin: auto;
+  width: 50%;
+  left: 26%;
+  color: rgb(0, 3, 7);
+  font-family: "Brush Script MT";
+  font-size: 50px;
+}
+
+.sale-title {
+  position: relative;
+  margin: auto;
+  width: 50%;
+  left: 2%;
+  color: rgb(0, 3, 7);
+  font-family: "Brush Script MT";
+  font-size: 50px;
+}
+
+.data {
+  height:  120px;
+}
+
+.user {
+  width: 350px;
+  height: 10%;
+}
+
+.userNameUserCard {
+  position: relative;
+  top: -10px;
+	color: rgb(0, 64, 138);
+	font-family: "Brush Script MT";
+	font-size: 25px;
+}
+
+.userEmailUserCard {
+  position: relative;
+  top: -40px;
+	color: #00aeff;
+	font-family: "Helvetica";
+	font-size: 15px;
+}
+
+.priceUserCard {
+  position: relative;
+  top: -60px;
+	color:  rgb(184, 151, 4);
+	font-family: "Helvetica";
+	font-size: 30px;
 }
 
 
@@ -19,10 +68,6 @@
 
 .valign-wrapper {
   background-color: #616161;
-}
-
-.card {
-  width: 200px;
 }
 
 .centerx {
@@ -73,21 +118,6 @@ nav {
   z-index: 0 !important;
 }
 
-.user {
-  width: 300px;
-  height: 120px;
-}
-
-.div-user-autocomplete {
-  margin: auto;
-  width: 50%;
-}
-
-.div-user {
-  background-color: #ffffff;
-}
-
-
 .input-field .prefix.active {
   color: #0084ff !important;
 }
@@ -102,8 +132,6 @@ nav {
   box-shadow: 0 1px 0 0 #000 !important;
 }
 
-
-
 .img-circle {
     border-radius: 50%;
 }
@@ -115,16 +143,6 @@ nav {
   background-color: #999;
   text-align: center;
 }
-
-.arrow-up {
-  width: 200px;
-  height: 200px;
-  background: url(https://goo.gl/BeSyyD);
-
-  /* The points are: centered top, left bottom, right bottom */
-  clip-path: polygon(50% 0, 0 100%, 100% 100%);
-}
-
 
 .center-sale-purchase-offers {
   /* border: 3px solid green; */
@@ -144,7 +162,6 @@ nav {
   width: 60%;
   background-color: #ffffff;
 }
-
 
 .scroll-test {
   max-height:100px; overflow:auto;

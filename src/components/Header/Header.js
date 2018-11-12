@@ -230,15 +230,6 @@ class Header extends Component {
   }
 
 
-  getMenu = () => {
-    let children = [];
-    //Inner loop to create children
-    for (let i = 0; i < this.state.currentMenuOptions.length ; i++) {
-      children.push(<li>{this.state.currentMenuOptions[i]}</li>);
-    }
-    //Create the parent and add the children
-    return <ul class="right hide-on-med-and-down">{children}</ul>;
-  }
 
   render() {
 
@@ -303,7 +294,7 @@ class Header extends Component {
                     </div>
                 </Link>
 
-                <ul class="right hide-on-med-and-down">
+                <ul className="right hide-on-med-and-down">
 
                   {(this.props.userId)?<li><Link to={
                           {
@@ -314,9 +305,9 @@ class Header extends Component {
                           }
                   }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
                   {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
+                  {/* {(this.props.userId)?<li><Link to="/users/0"><i className="material-icons left">share</i>Triples</Link></li>:null} */}
                   {(this.props.userId)?<li><Link to={"/users/profile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
-                  {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i class="material-icons left">person_outline</i>Sign-out</a></li>:null}
-
+                  {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i className="material-icons left">person_outline</i>Sign-out</a></li>:null}
 
 
                   {(!this.props.userId)?<li><Link to={

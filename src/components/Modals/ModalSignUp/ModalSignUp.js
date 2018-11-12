@@ -14,6 +14,7 @@ const ModalSignUp = (props) =>{
               <input placeholder="Apellido(s)" type="text" onChange={props.changeLastName} required/>
               <input placeholder="email" type="email" onChange={props.changeEmail}  required/>
               <input placeholder="password" type="password" minLength="6" onChange={props.changePassword}  required/>
+              <br></br><br></br><br></br>
               <input className="inputButton" type="submit" value="Registrarse"/>
             </form>
         </div>

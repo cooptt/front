@@ -1,0 +1,81 @@
+.user1-pos {
+    position: relative;
+    top: 50px;
+    left: 7%;
+
+    width: 70px;
+    height: 70px;
+    /* sumo */
+}
+
+.user2-pos {
+    position: relative;
+    top: 50px;
+    left: 71%;
+
+    width: 70px;
+    height: 70px;
+    /* resto */
+}
+
+.user3-pos {
+    position: relative;
+    top: 380px;
+    left: 22%;
+
+    width: 70px;
+    height: 70px;
+}
+
+
+.image1 {
+    position: relative;
+    top: 115px;
+    left: -24%;
+
+    width: 40px;
+    height: 40px;
+    /* sumo */
+}
+
+.image2 {
+    position: relative;
+    top: 115px;
+    left: 45%;
+
+    width: 40px;
+    height: 40px;
+    /* resto */
+}
+
+.image3 {
+    position: relative;
+    top: 300px;
+    left: 1%;
+
+    width: 40px; 
+    height: 40px;
+}
+ 
+.progressBar {
+    width: 50%;
+}
+
+
+.userName1 {
+    position: fixed;
+    top: 120px;
+    left: 85px;
+}
+
+.userName2 {
+    position: fixed;
+    top: 120px;
+    left: 560px;
+}
+
+.userName3 {
+    position: fixed;
+    top: 550px;
+    left: 321px;
+}

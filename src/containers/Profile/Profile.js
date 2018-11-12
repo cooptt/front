@@ -5,6 +5,7 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 import config from '../../config'
 import {Link} from 'react-router-dom'
 import Header from '../../components/Header/Header';
+import SideNavChat from '../VideoGames/SideNavChat';
 
 const fakeImageUrl = 'https://i11d.3djuegos.com/juegos/11552/god_of_war_ps4__nombre_temporal_/fotos/ficha/god_of_war_ps4__nombre_temporal_-3754795.jpg';
 
@@ -22,8 +23,6 @@ const matchingR = {
 
 const fakeMatchingsIni = Array(4).fill(matching);
 const fakeMatchingsResponse = Array(10).fill(matchingR);
-
-
 
 
 //AUTOCOMPLETE COMPONENT
@@ -261,8 +260,8 @@ class OptionButton extends Component{
             <br></br>
           </div>
           
-          <div className="modal-footer" onClick = {this.handleClickOnCreateOffer.bind(this)}>
-            <a className="modal-close waves-effect waves-blue btn-flat blue">
+          <div className="modal-footer">
+            <a className="modal-close waves-effect waves-blue btn-flat blue"  onClick = {this.handleClickOnCreateOffer.bind(this)}>
               <font color="white">Add Offer</font>
             </a>
           </div>
@@ -271,20 +270,22 @@ class OptionButton extends Component{
         </div>
 
         <div className="fixed-action-btn">
-        <a className="btn-floating btn-large red">
-          <i className="large material-icons">menu</i>
-        </a>
+          <a className="btn-floating btn-large blue darken-4 pulse">
+            <i className="large material-icons">menu</i>
+          </a>
         <ul>
-          <li><a className="btn-floating green"><i className="material-icons">delete</i></a></li>
+          <li><a className="btn-floating yellow darken-2"><i className="material-icons">local_offer</i></a></li>
+          <li><a className="btn-floating green" onClick={this.props.handleOpenChat}><i className="material-icons">message</i></a></li>
           <li><a className="btn-floating purple"><i className="material-icons" onClick = {this.handleClickOnChange.bind(this)}>forward</i></a></li>
-          <li><a className="btn-floating blue"><i className="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
+          <li><a className="btn-floating red"><i className="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
         </ul>
       </div>
 
         {/* <div class="row">
           <OfferList data = {this.state.offerList} />
         </div> */}
-        <div className="type-offers-div">{this.state.typeOfOffers}</div>
+        <br></br><br></br>
+        <p className="type-offer-title-profile">{this.state.typeOfOffers}</p>
 
         <br></br>       <br></br>        <br></br>
         <div className="centerx">
@@ -336,21 +337,17 @@ const OfferCard = (props) => {
           </i>
         </span>
         
-        <p align='right'> 
-          <a href="#UserGUI">
-            <font size="2"> 
-              jaime Daniel 
-            </font> 
-          </a>
-        </p>
 
-        <p align='right'>
-          <a href="#">
+        <div align="right">
             <font color="#cca300">
               ${props.offer.price}
             </font>
-          </a>
-        </p>
+            
+            <p align='right'>
+              <i className="material-icons">delete</i>
+            </p>
+            
+        </div>
       </div>
 
       <div className="card-reveal">
@@ -378,6 +375,7 @@ class Profile extends Component {
     this.catalogue = [];
     this.nombreId = new Map();
     this.autoCompleteData = {};
+    this.handleOpenChat = this.handleOpenChat.bind(this);
   }
 
   componentDidMount() {
@@ -398,10 +396,40 @@ class Profile extends Component {
 
       //console.log(this.autoCompleteData);
 
+      let elem = document.querySelector('.sidenav');
+      this.sideNav = M.Sidenav.init(elem, {});
+
+
     })
     .catch(err => console.error(err));
   }
   
+  handleOpenChat() {
+    this.sideNav.open();
+  }
+
+  handleClickOnStar = (index) => {
+    this.colorStars(index);
+  }
+
+  colorStars = (index) => {
+    for(let i = 5; i >= 1; i--){
+      document.getElementById('star'+i).classList.remove('checked-profile');
+    }
+
+    for(let i = 1; i <= index; i++){
+      document.getElementById('star'+i).classList.add('checked-profile');
+    }
+
+    this.sendUserRating(index);
+  }
+
+  sendUserRating = (rating) => {
+    fetch(`${config.server}/addRatingToUser?ratingUserId=${this.props.userId}&ratedUserId=${this.props.match.params.userId}&rating=${rating}`,{method: 'POST'})
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+  }
 
   render() {
     return (
@@ -416,7 +444,34 @@ class Profile extends Component {
         
         <br></br><br></br><br></br>
 
-        <OptionButton nombreId={this.nombreId} autoCompleteData={this.autoCompleteData} userId={this.props.userId}/>
+
+        <div className="user-picture-div-container">
+            <img className="user-picture-profile hoverable z-depth-3" src="https://media.licdn.com/dms/image/C5603AQHyayaxPF3UMA/profile-displayphoto-shrink_200_200/0?e=1545264000&v=beta&t=s8M2QpHyZECTIT6qt15Zi7HN3IKGVtaefaQTzstI-Z0"></img>
+        </div>
+
+         <br></br>
+
+        <div className="stars-div-profile">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+            <span className="fa fa-star checked-profile" id="star1" onClick={() => {this.handleClickOnStar(1)}}></span>
+            <span className="fa fa-star checked-profile" id="star2" onClick={() => {this.handleClickOnStar(2)}}></span>
+            <span className="fa fa-star checked-profile" id="star3" onClick={() => {this.handleClickOnStar(3)}}></span>
+            <span className="fa fa-star checked-profile" id="star4" onClick={() => {this.handleClickOnStar(4)}}></span>
+            <span className="fa fa-star checked-profile" id="star5" onClick={() => {this.handleClickOnStar(5)}}></span>
+        </div>
+
+        <div className="user-information-profile">
+          <center>
+            <p className="rating-profile">Rating 4.5</p>
+            <p className="user-name-profile">Jaime Martinez</p>
+            <p className="email-profile">jaimedmm@outlook.com</p>
+          </center>
+        </div>
+        <SideNavChat userId={this.props.userId}/>
+        <OptionButton nombreId={this.nombreId} 
+          autoCompleteData={this.autoCompleteData} 
+          userId={this.props.match.params.userId}
+          handleOpenChat={this.handleOpenChat}/>
 
       </div>
     );

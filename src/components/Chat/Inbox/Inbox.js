@@ -80,7 +80,7 @@ class Inbox extends Component {
                     {messages}
                 </div>
                 <form onSubmit={this.sendMessageHandler} id="sendMessageForm">
-                    <input type="text" onChange={this.typingHandler}  formnovalidate required/>
+                    <input type="text" onChange={this.typingHandler}  required/>
                     <input type="submit" value="Send"/>
                 </form>
             </div>
