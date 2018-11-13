@@ -12,8 +12,10 @@ import Chat from '../../components/Chat/Chat';
 import Header from '../../components/Header/Header';
 import SideNavChat from './SideNavChat';
 
+
 // Server URL
 import config from '../../config'
+
 
 // Props
 // userId
@@ -52,7 +54,7 @@ class VideoGames extends Component {
               			<UserOfferCard
                 			email={this.state.buyOffers[i].email}
                 			// userImageUrl={this.state.buyOffers[i].userImageUrl}
-                			userImageUrl='https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png'
+                			userImageUrl={config.server + '/' + this.state.buyOffers[i].userImage}
                 			personName={this.state.buyOffers[i].firstName + ' ' + this.state.buyOffers[i].lastName}
 							price={this.state.buyOffers[i].price}
 							userId={this.state.buyOffers[i].userId}
@@ -69,7 +71,7 @@ class VideoGames extends Component {
 					<div className="col s4">
 						<UserOfferCard
 							// userImageUrl={this.state.buyOffers[i].userImageUrl}
-							userImageUrl='https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png'
+							userImageUrl={config.server + '/' + this.state.sellOffers[j].userImage}
 							email={this.state.sellOffers[j].email}
 							personName={this.state.sellOffers[j].firstName + ' ' + this.state.sellOffers[j].lastName}
 							price={this.state.sellOffers[j].price}

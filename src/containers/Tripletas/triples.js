@@ -107,8 +107,8 @@ class Triples extends Component {
 
   	componentDidMount() {
     	fetch(`${config.server}/getTriplets?userId=${this.props.match.params.userId}`)
-		.then(response =>  response.json())
-		.then(response => {
+			.then(response =>  response.json())
+			.then(response => {
 			// console.log(response);
 			if(response.data.length > 0){
 				this.setState({cycles : response.data});
@@ -210,6 +210,7 @@ class Triples extends Component {
 		
 		for (let i = 0; i < currentTriple.length; i++, this.cardId++) {
 			let value = this.cardId;
+			console.log('CURRENT TRILE', currentTriple[i])
 			content.push(
 				<div key = {'offerCard' + value}>
 					<div className={"offer-pos" + i}  id={'offerCard' + value} onClick = {() => this.handleClickOnOffer(`#offerCard${value}`)}>
@@ -218,7 +219,9 @@ class Triples extends Component {
 							videoGameName = {currentTriple[i].title}
 							userName = {currentTriple[i].firstName + ' ' + currentTriple[i].lastName} 
 							price = {currentTriple[i].price}
-							id={value}/>
+							id={value}
+							imageUrl={config.server + '/' + currentTriple[i].userImage}/>
+							
 					</div>
 					{(i===2) ?
 						<a data-target="animationModal" key = {'tripleButton' + index} onClick = { () => { this.handleClickOnAnimationButton(index)}} 
@@ -258,7 +261,7 @@ const SingleTripleOfferCard = (props) => {
         		<div className="col s12">
           			<br></br>
 					<center>
-						<img src={fakeImageUrls[props.pos]} className="hoverable img-circle responsive-img"></img>
+						<img src={props.imageUrl} className="hoverable img-circle responsive-img"></img>
 						<p className="userNameTriple">{props.userName}</p>
 						<p className="videoGameNameTriple">{props.videoGameName}</p>
 						<p className="priceTriple">${props.price}</p>

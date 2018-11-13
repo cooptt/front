@@ -146,9 +146,9 @@ class Cycle extends Component {
                     {this.props.triple[2].firstName}
                 </div>
 
-                <img src={'https://media.licdn.com/dms/image/C5603AQHyayaxPF3UMA/profile-displayphoto-shrink_200_200/0?e=1545264000&v=beta&t=s8M2QpHyZECTIT6qt15Zi7HN3IKGVtaefaQTzstI-Z0'} className="hoverable img-circle responsive-img user1-pos z-depth-3" id="userAnimation1"></img>
-                <img src={'https://www.citrix.com/blogs/wp-content/uploads/2017/05/Citrix-Blog-User-Bio-Photo-5.png'} className="hoverable img-circle responsive-img user2-pos z-depth-3" id="userAnimation2"></img>
-                <img src={'https://userdefenders.com/wp-content/uploads/2018/05/Snapback-Hat-Model-324x324.jpg'} className="hoverable img-circle responsive-img user3-pos z-depth-3" id="userAnimation3"></img>
+                <img src={config.server + '/' + this.props.triple[0].userImage} className="hoverable img-circle responsive-img user1-pos z-depth-3" id="userAnimation1"></img>
+                <img src={config.server + '/' + this.props.triple[1].userImage} className="hoverable img-circle responsive-img user2-pos z-depth-3" id="userAnimation2"></img>
+                <img src={config.server + '/' + this.props.triple[2].userImage} className="hoverable img-circle responsive-img user3-pos z-depth-3" id="userAnimation3"></img>
 
                 <img src={config.server + '/' + this.props.triple[0].image} className="hoverable responsive-img image1" id="gameAnimation1"></img>
                 <img src={config.server + '/' + this.props.triple[1].image}className="hoverable responsive-img image2" id="gameAnimation2"></img>

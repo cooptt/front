@@ -6,70 +6,11 @@ import config from '../../config'
 import {Link} from 'react-router-dom'
 import Header from '../../components/Header/Header';
 import SideNavChat from '../VideoGames/SideNavChat';
+import BestRankings from './BestRankings';
+import AutocompleteAddOffer from './AutocompleteAddOffer';
+import OfferCard from './OfferCard';
+import UserInfoAndRating from './UserInfoAndRating';
 
-const fakeImageUrl = 'https://i11d.3djuegos.com/juegos/11552/god_of_war_ps4__nombre_temporal_/fotos/ficha/god_of_war_ps4__nombre_temporal_-3754795.jpg';
-
-const matching = {
-  tittle: 'GOD OF WAR',
-  image: fakeImageUrl,
-  videoGameId: 9 
-};
-
-const matchingR = {
-  tittle: 'GOD OF WAR',
-  image: 'https://www.gamestop.com/common/images/lbox/127511b.jpg',
-  videoGameId: 9 
-};
-
-const fakeMatchingsIni = Array(4).fill(matching);
-const fakeMatchingsResponse = Array(10).fill(matchingR);
-
-
-//AUTOCOMPLETE COMPONENT
-// props = {
-//   name: 'name of the autocomplete field id=name',
-//   autoCompleteData: 'object name - url'
-// };
-class AutocompleteInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {
-    let elem = document.querySelector('#' + this.props.name);
-
-    this.instanceAutocomplete = M.Autocomplete.init(elem, {
-      data: this.props.autoCompleteData,
-      // limit: 4
-    });
-  }
-
-  render() {
-    return(
-      <div className={this.props.divStyle}>
-        <div className="input-field">
-          <i className="material-icons prefix tiny">search</i>
-          <input type="text" id={this.props.name} className="autocomplete"></input>
-          <label for={this.props.name}>VideoGame</label>
-        </div>
-      </div>
-    );}
-}
-
-class modelo extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return(
-      <div></div>
-    );
-  }
-}
 
 class BinarySwitchCustomized extends Component {
 
@@ -210,12 +151,19 @@ class OptionButton extends Component{
     }
   }
 
+  handleClickOnBest() {
+    this.instanceModal.open();
+  }
+
   componentDidMount() {
     let elem= document.querySelector('.fixed-action-btn');
     this.optionButton = M.FloatingActionButton.init(elem, {});
 
-    elem = document.querySelector('.modal');
-    this.instanceModal = M.Modal.init(elem, {});
+    let elem1 = document.getElementById('modal1');
+    this.instanceModal = M.Modal.init(elem1, {});
+
+    let elem2 = document.getElementById('modal2')
+    this.instanceModal2 = M.Modal.init(elem2, {});
 
     this.getSaleOffers();
     this.getPurchaseOffers();
@@ -241,13 +189,20 @@ class OptionButton extends Component{
   render() {
     return(
       <div>
+        <div id="modal2" class="modal">
+          <div class="modal-content">
+            <h4>Best Matchings</h4>
+            <BestRankings userId={this.props.userId}/>
+          </div>
+        </div>
+
         <div id="modal1" className="modal">
           <div className="modal-content">
             <h4>Add Offer</h4>
             
             <br></br><br></br>
 
-            <AutocompleteInput name="videoGames-input" autoCompleteData={this.props.autoCompleteData}/>
+            <AutocompleteAddOffer name="videoGames-input" autoCompleteData={this.props.autoCompleteData}/>
 
             <br></br><br></br>
 
@@ -260,11 +215,10 @@ class OptionButton extends Component{
             <br></br>
           </div>
           
-          <div className="modal-footer">
+         
             <a className="modal-close waves-effect waves-blue btn-flat blue"  onClick = {this.handleClickOnCreateOffer.bind(this)}>
               <font color="white">Add Offer</font>
             </a>
-          </div>
         
           {/*CHANGE LOGIC'S BUTTON*/}
         </div>
@@ -274,11 +228,21 @@ class OptionButton extends Component{
             <i className="large material-icons">menu</i>
           </a>
         <ul>
-          <li><a className="btn-floating yellow darken-2"><i className="material-icons">local_offer</i></a></li>
+
+          {(this.props.userId === this.props.destId) ?
+            <li><a className="btn-floating yellow darken-2"><i className="material-icons" onClick = {this.handleClickOnBest.bind(this)}>local_offer</i></a></li>
+          :null}
+
           <li><a className="btn-floating green" onClick={this.props.handleOpenChat}><i className="material-icons">message</i></a></li>
-          <li><a className="btn-floating purple"><i className="material-icons" onClick = {this.handleClickOnChange.bind(this)}>forward</i></a></li>
-          <li><a className="btn-floating red"><i className="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
-        </ul>
+          
+          {(this.props.userId === this.props.destId) ?
+            <li><a className="btn-floating purple"><i className="material-icons" onClick = {this.handleClickOnChange.bind(this)}>forward</i></a></li>
+          :null}
+
+          {(this.props.userId === this.props.destId) ?
+            <li><a className="btn-floating red"><i className="material-icons" onClick = {this.handleClick.bind(this)}>add_shopping_cart</i></a></li>
+          :null}
+          </ul>
       </div>
 
         {/* <div class="row">
@@ -319,52 +283,6 @@ class OptionButton extends Component{
 }
 
 
-const OfferCard = (props) => {
-  return (
-    <div>
-      <div className="card hoverable">
-
-      {/* LOCAL TESTING CHANGE src={'http://localhost:8080/' + props.image} */}
-      <Link to='/videogames'>
-        <img className="activator" src={config.server + '/' + props.offer.image} width="200" height="230"></img>
-      </Link>
-
-      <div className="card-content">
-        <span className="card-title activator grey-text text-darken-4">
-          <font size="3"> {props.offer.title.substring(0, 15)} </font>
-          <i className="material-icons right tiny">
-            more_vert
-          </i>
-        </span>
-        
-
-        <div align="right">
-            <font color="#cca300">
-              ${props.offer.price}
-            </font>
-            
-            <p align='right'>
-              <i className="material-icons">delete</i>
-            </p>
-            
-        </div>
-      </div>
-
-      <div className="card-reveal">
-        <span className="card-title grey-text text-darken-4">
-          Description
-          <i className="material-icons right">
-            close
-          </i>
-        </span>
-        <p>Juego en buen estado, 1 mes de uso, incluye caja xD!</p>
-      </div>
-      
-    </div>
-  </div>
-  );
-};
-
 
 
 class Profile extends Component {
@@ -372,10 +290,13 @@ class Profile extends Component {
     super(props);
     //this.handleClick = this.handleClick.bind(this);
     
+    this.state = {destId: null};
     this.catalogue = [];
     this.nombreId = new Map();
     this.autoCompleteData = {};
     this.handleOpenChat = this.handleOpenChat.bind(this);
+
+    this.sendMessagePersonalHandler = this.sendMessagePersonalHandler.bind(this);
   }
 
   componentDidMount() {
@@ -406,34 +327,18 @@ class Profile extends Component {
   
   handleOpenChat() {
     this.sideNav.open();
+
   }
 
-  handleClickOnStar = (index) => {
-    this.colorStars(index);
-  }
-
-  colorStars = (index) => {
-    for(let i = 5; i >= 1; i--){
-      document.getElementById('star'+i).classList.remove('checked-profile');
-    }
-
-    for(let i = 1; i <= index; i++){
-      document.getElementById('star'+i).classList.add('checked-profile');
-    }
-
-    this.sendUserRating(index);
-  }
-
-  sendUserRating = (rating) => {
-    fetch(`${config.server}/addRatingToUser?ratingUserId=${this.props.userId}&ratedUserId=${this.props.match.params.userId}&rating=${rating}`,{method: 'POST'})
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
+  
+  sendMessagePersonalHandler =()=>{
+    let value = this.props.match.params.userId
+    this.setState({destId:value})
   }
 
   render() {
     return (
-      <div className="1">
+      <div>
  
         <Header 
           authenticated={this.props.authenticated} 
@@ -444,35 +349,18 @@ class Profile extends Component {
         
         <br></br><br></br><br></br>
 
+        <UserInfoAndRating userId={this.props.userId} destUserId={this.props.match.params.userId}/>
 
-        <div className="user-picture-div-container">
-            <img className="user-picture-profile hoverable z-depth-3" src="https://media.licdn.com/dms/image/C5603AQHyayaxPF3UMA/profile-displayphoto-shrink_200_200/0?e=1545264000&v=beta&t=s8M2QpHyZECTIT6qt15Zi7HN3IKGVtaefaQTzstI-Z0"></img>
-        </div>
 
-         <br></br>
+        {(this.props.userId!==null)?
+                <SideNavChat userId={this.props.userId} destId={parseInt(this.state.destId)}/>:null}
 
-        <div className="stars-div-profile">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-            <span className="fa fa-star checked-profile" id="star1" onClick={() => {this.handleClickOnStar(1)}}></span>
-            <span className="fa fa-star checked-profile" id="star2" onClick={() => {this.handleClickOnStar(2)}}></span>
-            <span className="fa fa-star checked-profile" id="star3" onClick={() => {this.handleClickOnStar(3)}}></span>
-            <span className="fa fa-star checked-profile" id="star4" onClick={() => {this.handleClickOnStar(4)}}></span>
-            <span className="fa fa-star checked-profile" id="star5" onClick={() => {this.handleClickOnStar(5)}}></span>
-        </div>
-
-        <div className="user-information-profile">
-          <center>
-            <p className="rating-profile">Rating 4.5</p>
-            <p className="user-name-profile">Jaime Martinez</p>
-            <p className="email-profile">jaimedmm@outlook.com</p>
-          </center>
-        </div>
-        <SideNavChat userId={this.props.userId}/>
         <OptionButton nombreId={this.nombreId} 
           autoCompleteData={this.autoCompleteData} 
-          userId={this.props.match.params.userId}
-          handleOpenChat={this.handleOpenChat}/>
-
+          userId={this.props.userId}
+          handleOpenChat={this.handleOpenChat}
+          funci={this.sendMessagePersonalHandler}
+          destId={parseInt(this.props.match.params.userId)}/>
       </div>
     );
   }
