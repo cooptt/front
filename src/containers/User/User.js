@@ -1,116 +1,146 @@
 import React, { Component } from 'react';
-import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
 
-// CSS styles
-import './User.css';
+import M from 'materialize-css/dist/js/materialize.min.js'
 
 // External Components
 import Header from '../../components/Header/Header';
-import VideoGameOfferCard from './VideoGameOfferCard';
-import UserOfferCardEmpty from '../VideoGames/UserOfferCardEmpty';
-import SideNavChat from '../VideoGames/SideNavChat'
-import Chat from '../../components/Chat/Chat'
+import SideNavChat from '../VideoGames/SideNavChat';
+
+import UserInfoAndRating from '../Profile/UserInfoAndRating';
+import Modal from '../Tripletas/Modal';
+import SaleAndPurchaseOffers from '../Profile/SaleAndPurchaseOffers';
+
+import Footer from '../../components/Footer/Footer';
+
+// CSS styles
+import '../Profile/profile.css';
+import 'materialize-css/dist/css/materialize.min.css'
+
 // Server URL
 import config from '../../config'
 
-
 class User extends Component {
+	constructor(props) {
+		super(props);
+		//this.handleClick = this.handleClick.bind(this);
 
-        state = {
-            buyOffers : [],
-            sellOffers: [],
-            destId: null
-        };
+		this.saleOffers = [];
+		this.purchaseOffers = [];
 
+		this.state = {
+			currentOfferList: [], 
+			offersType: 'Ofertas de venta'
+		};
+	}
 
+  	componentDidMount() {
+		let elem= document.querySelector('.fixed-action-btn');
+		this.optionButton = M.FloatingActionButton.init(elem, {hoverEnabled: false});
 
-
-    componentDidMount() {
-        var elem = document.querySelector('.fixed-action-btn');
-        this.actionButton = M.FloatingActionButton.init(elem, {});
-        this.getVideoGameSellList(); 
-        this.getVideoGameBuyList();
+		let sideNavElem = document.querySelector('.sidenav');
+      	this.sideNav = M.Sidenav.init(sideNavElem, {});
+		
+		this.getSaleOffers();
+		this.getPurchaseOffers();
+	}
+	
+	getSaleOffers = _ => {
+        fetch(`${config.server}/getUserSellList?userId=${this.props.match.params.userId}`)
+        .then(response => response.json())
+        .then(response => {
+			this.saleOffers = response.data;
+			if(this.state.offersType === 'Ofertas de venta')
+				this.setState({currentOfferList: response.data});
+        })
+        .catch(err => console.error(err));
     }
-
-    getVideoGameSellList = _ => {
-		fetch(`${config.server}/getUserSellList?userId=${this.props.match.params.userId}`)
-		.then(response =>  response.json())
-		.then(response => {
-			this.setState({sellOffers : response.data});
-		})
-		.catch(err => console.error(err));
-	};
-
-    getVideoGameBuyList = _ => {
-		fetch(`${config.server}/getUserBuyList?userId=${this.props.match.params.userId}`)
-		.then(response =>  response.json())
-		.then(response => {
-			this.setState({buyOffers: response.data});
-		})
-		.catch(err => console.error(err));
-	};
-
     
-    handleClickOnStar() {
-        document.getElementById('star5').classList.remove('checked');
+    getPurchaseOffers = _ => {
+        fetch(`${config.server}/getUserBuyList?userId=${this.props.match.params.userId}`)
+        .then(response => response.json())
+        .then(response =>{
+			this.purchaseOffers = response.data;
+			if(this.state.offersType === 'Ofertas de compra')
+			 	this.setState({currentOfferList: response.data});
+		 } )
+        .catch(err => console.error(err));
     }
 
-    sendMessagePersonalHandler =()=>{
-        let value = this.props.match.params.userId
-        this.setState({destId:value})
-    }
+	// handleCloseActionModal = _ => {
+	// 	this.getSaleOffers();
+	// 	this.getPurchaseOffers();
+	// }
+  
+  	handleOpenChat = _ => {
+    	this.sideNav.open();
+	}
 
-    render() {
-        return(
-            <div>
-                
-                <Header
+	handleClickOnChangeOfferType = _ => {
+		if(this.state.offersType === 'Ofertas de compra'){
+			this.setState({currentOfferList: this.saleOffers, offersType: 'Ofertas de venta'});
+		}else if(this.state.offersType === 'Ofertas de venta'){
+			this.setState({currentOfferList: this.purchaseOffers, offersType: 'Ofertas de compra'});
+		}
+	}
+
+	render() {
+		let destUserId = parseInt(this.props.match.params.userId);
+
+    	return (
+      		<div>
+				<Header 
 					authenticated={this.props.authenticated} 
-					login={this.props.logInHandler}
+					login={this.props.logInHandler} 
 					logout={this.props.logOutHandler} 
 					userId={this.props.userId}
 				/>
+				
+				<Modal modalName="modal-for-actions" modalContent={this.state.componentInModal}/>
+				
+				<br></br><br></br><br></br>
 
-                <br></br>
-                <br></br>
+				<UserInfoAndRating userId={this.props.userId} destUserId={destUserId}/>
 
+				<br></br><br></br><br></br>
 
+				<p className="type-offer-title-profile">
+					{this.state.offersType} &nbsp;
+					<a className="btn-floating red">
+						<i className="material-icons" onClick = {this.handleClickOnChangeOfferType}>	
+							forward
+						</i>
+					</a>
+				</p>
 
-                <br></br>
-                <br></br>
-                <div className="user-picture z-depth-5">
-                    <img src="https://media.licdn.com/dms/image/C5603AQGVDf_wWsYxxA/profile-displayphoto-shrink_200_200/0?e=1544054400&v=beta&t=XTGNgUxiWEa5-KSepTwu1Q-Ykcu2_uWe7b-M0jcNJp8" width="200" height="200" className="hoverable"></img>
-                </div>
+				<br></br><br></br><br></br>
+				
+				<div className="center-offers-table">
+					<SaleAndPurchaseOffers offerList={this.state.currentOfferList}/>
+				</div>
 
-                <br></br>
+                <Footer/>
 
-                <div className="stars-div">
-				    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-                    <span className="fa fa-star checked"></span>
-                    <span className="fa fa-star checked"></span>
-                    <span className="fa fa-star checked"></span>
-                    <span className="fa fa-star checked"></span>
-                    <span className="fa fa-star checked" id="star5" onClick={this.handleClickOnStar.bind(this)}></span>
-                </div>
+				{(this.props.userId!==null)?
+					<SideNavChat userId={this.props.userId} destId={destUserId}/>:null}
 
+				
+				<div className="fixed-action-btn">
+          			<a className="btn-floating btn-large blue darken-4 pulse">
+            			<i className="large material-icons">menu</i>
+          			</a>
+        			
+					<ul>
+          				<li>
+							<a className="btn-floating green" onClick={this.handleOpenChat}>
+								<i className="material-icons">message</i>
+							</a>
+						</li>
+          			</ul>
 
-                <br></br>
-                <br></br>
-                <br></br>
-
-                {(this.props.userId!==null)?
-                <SideNavChat userId={this.props.userId} destId={parseInt(this.state.destId)}/>:null}
-
-
-                {/* BUTTON SEND MESSAGE */}
-                {(this.props.userId!==null && parseInt(this.props.userId)!==parseInt(this.props.match.params.userId))?
-                <button onClick={this.sendMessagePersonalHandler}>
-                    Only if this is not my profile
-                </button>:null}
-            </div>
-        );
-    }
+      			</div>
+         	</div>
+    	);
+	}
 }
 
 export default User;

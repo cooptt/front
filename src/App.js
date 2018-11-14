@@ -10,6 +10,7 @@ import firebase from './Firebase'     // <------  import firebase
 import config from './config'
 import Triples from './containers/Tripletas/triples';
 import Loader from 'react-loader'
+
 class App extends Component {
   state = {
       authenticated:false,
@@ -83,11 +84,11 @@ class App extends Component {
               render={(props)=> <Home {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
           <Route
-              path="/users/:userId"  exact
+              path="/userprofile/:userId"  exact
               render={(props)=> <User {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
           <Route
-              path="/users/profile/:userId"
+              path="/myprofile/:userId"  exact
               render={(props)=> <Profile {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
           <Route

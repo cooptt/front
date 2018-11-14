@@ -11,8 +11,9 @@ import './profile.css'
 //   matches
 //   email
 // }
+
 const UserOfferCardRated = (props) => {
-	let linkToUserProfile = `/users/profile/${props.userId}`;
+	let linkToUserProfile = `/userprofile/${props.userId}`;
 	return (
         <div className="row">
             <div className="user">
@@ -20,7 +21,7 @@ const UserOfferCardRated = (props) => {
                     <div className="col s3">
                         
                         <Link to={linkToUserProfile}>
-                            <img src={'https://melbournechapter.net/images/female-vector-avatar-5.png'} className="hoverable img-circle responsive-img"></img>
+                            <img src={config.server + '/' + props.userImage} className="hoverable img-circle responsive-img"></img>
                         </Link>
 
                     </div>										

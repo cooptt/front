@@ -229,8 +229,6 @@ class Header extends Component {
       })
   }
 
-
-
   render() {
 
       let {showSignIn,showSignUp} = this.state;
@@ -306,7 +304,7 @@ class Header extends Component {
                   }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
                   {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
                   {/* {(this.props.userId)?<li><Link to="/users/0"><i className="material-icons left">share</i>Triples</Link></li>:null} */}
-                  {(this.props.userId)?<li><Link to={"/users/profile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
+                  {(this.props.userId)?<li><Link to={"/myprofile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
                   {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i className="material-icons left">person_outline</i>Sign-out</a></li>:null}
 
 

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import './profile.css';
 
-import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
+import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 
 //AUTOCOMPLETE COMPONENT
 // props = {
-//   name: 'name of the autocomplete field id=name',
+//   autoCompleteInputName: 'name of the autocomplete field id=name',
 //   autoCompleteData: 'object name - url'
+//   divStyle:
 // };
+
 class AutocompleteAddOffer extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +19,7 @@ class AutocompleteAddOffer extends Component {
     }
   
     componentDidMount() {
-        let elem = document.querySelector('#' + this.props.name);
+        let elem = document.querySelector('#' + this.props.autoCompleteInputName);
         this.instanceAutocomplete = M.Autocomplete.init(elem, { data: this.props.autoCompleteData });
     }
   
@@ -25,8 +28,8 @@ class AutocompleteAddOffer extends Component {
             <div className={this.props.divStyle}>
                 <div className="input-field">
                     <i className="material-icons prefix tiny">search</i>
-                    <input type="text" id={this.props.name} className="autocomplete"></input>
-                    <label for={this.props.name}>VideoGame</label>
+                    <input type="text" id={this.props.autoCompleteInputName} className="autocomplete"></input>
+                    <label htmlFor={this.props.autoCompleteInputName}>Nombre del videojuego</label>
                 </div>
             </div>
         );

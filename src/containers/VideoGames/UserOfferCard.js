@@ -10,7 +10,7 @@ import config from '../../config'
 //   price
 // }
 const UserOfferCard = (props) => {
-	let linkToUserProfile = `/users/profile/${props.userId}`;
+	let linkToUserProfile = `/userprofile/${props.userId}`;
 	return (
 		<div className="user">
 			<div className="row valign-wrapper white z-depth-1">

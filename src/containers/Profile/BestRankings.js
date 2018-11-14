@@ -5,13 +5,11 @@ import {Redirect } from 'react-router-dom';
 import M from 'materialize-css/dist/js/materialize.min.js'
 
 // CSS styles
+import './BestRankings.css'
 
 // External Components
-
 import UserOfferCardRated from './UserOfferCardRated';
-import Header from '../../components/Header/Header';
 import config from '../../config'
-
 
 class BestRankings extends Component {
 
@@ -42,14 +40,15 @@ class BestRankings extends Component {
     // email: null,
     // matches: 4 
 
-    createTable = () => {
+    createTable = _ => {
         let table = [];
         for(let i=0; i < this.state.bestMatchings.length; i++){
             table.push( <UserOfferCardRated 
-                id={this.state.bestMatchings[i].userId}
+                userId={this.state.bestMatchings[i].userId}
                 matches={this.state.bestMatchings[i].matches}
                 personName={this.state.bestMatchings[i].firstName + ' ' + this.state.bestMatchings[i].lastName}
                 email={this.state.bestMatchings[i].email}
+                userImage={this.state.bestMatchings[i].userImage}
             />);
         }
 
@@ -60,6 +59,9 @@ class BestRankings extends Component {
     render() {
         return(
             <div>
+                <p className="best-ranking-title">
+                    Mejores Emparejamientos
+                </p>
                 {this.createTable()}
             </div>
         );

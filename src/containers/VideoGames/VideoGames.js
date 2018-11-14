@@ -8,10 +8,9 @@ import './VideoGames.css';
 import Carousel from './Carousel';
 import UserOfferCard from './UserOfferCard';
 import UserOfferCardEmpty from './UserOfferCardEmpty';
-import Chat from '../../components/Chat/Chat';
 import Header from '../../components/Header/Header';
 import SideNavChat from './SideNavChat';
-
+import Footer from '../../components/Footer/Footer';
 
 // Server URL
 import config from '../../config'
@@ -126,6 +125,12 @@ class VideoGames extends Component {
 	};
 
     render() {
+		let initialPosCar; 
+
+		if(this.props.location.state === undefined) 
+			initialPosCar = 0;
+		else initialPosCar = this.props.location.state.initialPos; 
+
         return(
             <div>
                 {/* <Autocomplete name="catalogue" autoCompleteData={fakeAutocompleteData}/> */}
@@ -137,9 +142,8 @@ class VideoGames extends Component {
 				/>
 
                 <br></br>
-
-                <Carousel updateImagePos={this.updateImagePos} initialPos={this.props.location.state.initialPos}/>
-
+				
+                <Carousel updateImagePos={this.updateImagePos} initialPos={initialPosCar}/>
 
 				<div className="row">
 					<div className="col s6">
@@ -160,6 +164,8 @@ class VideoGames extends Component {
 
 				{(this.props.userId!==null)?<SideNavChat userId={this.props.userId}/>:null}
 
+
+				<Footer />
 				{/*
 						var elmnt = document.getElementById("scrollPos");
 		elmnt.scrollTop = elmnt.scrollHeight;

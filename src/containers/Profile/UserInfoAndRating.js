@@ -21,11 +21,11 @@ class UserInfoAndRating extends Component {
     
     colorStars = (index) => {
         for(let i = 5; i >= 1; i--){
-            document.getElementById('star'+i).classList.remove('checked-profile');
+            document.getElementById('star' + i).classList.remove('checked-profile');
         }
     
         for(let i = 1; i <= index; i++){
-            document.getElementById('star'+i).classList.add('checked-profile');
+            document.getElementById('star' + i).classList.add('checked-profile');
         }
     
         this.sendUserRating(index);
@@ -76,7 +76,7 @@ class UserInfoAndRating extends Component {
 
                 <br></br>
             
-                {(parseInt(this.props.userId) !== parseInt(this.props.destUserId)) ?
+                {(parseInt(this.props.userId) !== this.props.destUserId) ?
                     <div className="stars-div-profile">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
                         <span className="fa fa-star checked-profile" id="star1" onClick={() => {this.handleClickOnStar(1)}}></span>
