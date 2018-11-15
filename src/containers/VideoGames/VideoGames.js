@@ -43,10 +43,10 @@ class VideoGames extends Component {
       	// Outer loop to create parent
       	let i = 0, j= 0;
 
-      	let children = [];
-
 		//Inner loop to create children
     	while (i < this.state.buyOffers.length || j < this.state.sellOffers.length) {
+			let children = [];
+			
         	if(i < this.state.buyOffers.length){
           		children.push(
             		<div className="col s4">
@@ -80,10 +80,12 @@ class VideoGames extends Component {
           		);
           		j++;
 			}else children.push(<div className="col s4"><UserOfferCardEmpty/></div>);
+
+			table.push(<div className="row">{children}</div>);
 		}
 
 		//Create the parent and add the children
-		table.push(<div className="row">{children}</div>);
+		
 
 		return table;
 	}

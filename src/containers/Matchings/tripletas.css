@@ -1,0 +1,65 @@
+.offer-pos1 {
+	position: relative;
+	top: -120px;
+}
+
+.offer-pos2 {
+	position: relative;
+	top: -235px;
+}
+
+.tooltipped {
+	z-index: 200 !important;
+}
+
+.button-pos {
+	position: relative;
+	top: -303px;
+	left: 86%;
+	z-index: 0;
+}
+
+.centerTriple {
+	/* margin: auto; */
+	position: relative;
+	left: 30%;
+	width: 30%;
+	height: 900px;
+}
+
+.animationButton {
+	z-index: 200;
+}
+
+.img-circle {
+	border-radius: 50%;
+    width: 100px;
+	height: 100px;
+	z-index: -1;
+}
+
+.userNameTriple {
+	position: relative;
+	color: black;
+	font-family: "Brush Script MT";
+	font-size: 20px;
+}
+
+.videoGameNameTriple {
+	position: relative;
+	top: -10px;
+	color: #00aeff;
+	font-size: 17px;
+	font-family: 'monospace';
+	font-style: italic;
+}
+
+.priceTriple {
+	position: relative;
+	top: -30px;
+	color: rgb(184, 151, 4);
+	font-size: 17px;
+	
+	font-family: 'monospace';
+	font-style: italic;
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import config from '../../config'
 
+import './VideoGames.css'
+
 // USEROFFERCARD
 // Props {
 //   id
@@ -12,7 +14,7 @@ import config from '../../config'
 const UserOfferCard = (props) => {
 	let linkToUserProfile = `/userprofile/${props.userId}`;
 	return (
-		<div className="user">
+		<div className="user-in-video-game">
 			<div className="row valign-wrapper white z-depth-1">
 				<div className="col s3">
 					

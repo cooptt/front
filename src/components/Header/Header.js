@@ -302,10 +302,14 @@ class Header extends Component {
                               }
                           }
                   }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
+                  
+                  {(this.props.userId)?<li><Link to={"/matchings/" + this.props.userId}><i className="material-icons left">swap_horiz</i>Matchings</Link></li>:null}
+
                   {(this.props.userId)?<li><Link to={"/triples/" + this.props.userId}><i className="material-icons left">share</i>Triples</Link></li>:null}
+                  
                   {/* {(this.props.userId)?<li><Link to="/users/0"><i className="material-icons left">share</i>Triples</Link></li>:null} */}
                   {(this.props.userId)?<li><Link to={"/myprofile/" + this.props.userId}><i className="material-icons left">child_care</i>Perfil</Link></li>:null}
-                  {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i className="material-icons left">person_outline</i>Sign-out</a></li>:null}
+                  {(this.props.userId)?<li><a onClick = {this.logOutHandler}><i className="material-icons left">person_outline</i>Salir</a></li>:null}
 
 
                   {(!this.props.userId)?<li><Link to={
@@ -316,8 +320,8 @@ class Header extends Component {
                         }
                     }
                   }><i className="material-icons left">videogame_asset</i>VideoGames</Link></li>:null}
-                 {(!this.props.userId)? <li><a onClick = {this.signInHandler}><i className="material-icons left">person</i>Sign-In</a></li>:null}
-                 {(!this.props.userId)? <li><a onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Sign-Up</a></li>:null}
+                 {(!this.props.userId)? <li><a onClick = {this.signInHandler}><i className="material-icons left">person</i>Ingresar</a></li>:null}
+                 {(!this.props.userId)? <li><a onClick = {this.signUpHandler}><i className="material-icons left">person_add</i>Registrarse</a></li>:null}
                </ul>
             </div>
         </nav>

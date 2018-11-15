@@ -1,0 +1,56 @@
+.user1-pos-match {
+    position: relative;
+    top: 50px;
+    left: 7%;
+
+    width: 70px;
+    height: 70px;
+    /* sumo */
+}
+
+.user2-pos-match {
+    position: relative;
+    top: 50px;
+    left: 71%;
+
+    width: 70px;
+    height: 70px;
+    /* resto */
+}
+
+.image1-match {
+    position: relative;
+    top: 115px;
+    left: -13%;
+
+    width: 40px;
+    height: 40px;
+    /* sumo */
+}
+
+.image2-match {
+    position: relative;
+    top: 115px;
+    left: 56%;
+
+    width: 40px;
+    height: 40px;
+    /* resto */
+}
+ 
+.progressBar-match {
+    width: 50%;
+}
+
+
+.userName1-match {
+    position: fixed;
+    top: 120px;
+    left: 85px;
+}
+
+.userName2-match {
+    position: fixed;
+    top: 120px;
+    left: 560px;
+}

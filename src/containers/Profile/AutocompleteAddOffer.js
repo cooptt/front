@@ -18,11 +18,17 @@ class AutocompleteAddOffer extends Component {
         this.state = {};
     }
   
+    handleAutoCompleteInputClick = _ => {
+        let videoGameName = document.getElementById(this.props.autoCompleteInputName).value;
+        this.props.changeSateOnAddForm(videoGameName);
+    }
+
     componentDidMount() {
         let elem = document.querySelector('#' + this.props.autoCompleteInputName);
-        this.instanceAutocomplete = M.Autocomplete.init(elem, { data: this.props.autoCompleteData });
+        this.instanceAutocomplete = M.Autocomplete.init(elem, { data: this.props.autoCompleteData , limit: 5, onAutocomplete: this.handleAutoCompleteInputClick });
     }
   
+
     render() {
         return(
             <div className={this.props.divStyle}>

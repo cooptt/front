@@ -22,9 +22,9 @@
   height:  120px;
 }
 
-.user {
-  width: 350px;
-  height: 10%;
+.user-in-video-game {
+  width: 340px;
+  height: 80% !important;
 }
 
 .userNameUserCard {
@@ -147,7 +147,7 @@ nav {
 .center-sale-purchase-offers {
   /* border: 3px solid green; */
   margin: auto;
-  width: 55%;
+  width: 55% !important;
   background-color: #ffffff;
 }
 

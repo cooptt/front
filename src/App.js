@@ -9,6 +9,7 @@ import axios from 'axios'
 import firebase from './Firebase'     // <------  import firebase
 import config from './config'
 import Triples from './containers/Tripletas/triples';
+import Matchings from './containers/Matchings/Matchings';
 import Loader from 'react-loader'
 
 class App extends Component {
@@ -99,6 +100,11 @@ class App extends Component {
           <Route
               path="/triples/:userId"
               render={(props)=> <Triples {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
+          />
+
+         <Route
+              path="/matchings/:userId"
+              render={(props)=> <Matchings {...props} authenticated={this.state.authenticated} userId={this.state.userId} logInHandler={this.logInHandler} logOutHandler={this.logOutHandler}/>}
           />
 
           <Route

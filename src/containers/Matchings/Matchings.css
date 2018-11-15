@@ -1,0 +1,61 @@
+.offer-pos1-matchings {
+	position: relative;
+	top: -120px;
+}
+
+.offer-pos2-matchings {
+	position: relative;
+	top: -235px;
+}
+
+.button-pos-matchings {
+	position: relative;
+	top: -190px;
+	left: 86%;
+	z-index: 0;
+}
+
+.center-match-matchings {
+	/* margin: auto; */
+	position: relative;
+	left: 30%;
+	width: 30%;
+	height: 500px;
+}
+
+.animationButton-matchings {
+	z-index: 200;
+}
+
+.img-circle-matchings {
+	border-radius: 50%;
+    width: 100px;
+	height: 100px;
+	z-index: -1;
+}
+
+.userName-match-matchings {
+	position: relative;
+	color: black;
+	font-family: "Brush Script MT";
+	font-size: 20px;
+}
+
+.videoGameName-match-matchings {
+	position: relative;
+	top: -10px;
+	color: #00aeff;
+	font-size: 17px;
+	font-family: 'monospace';
+	font-style: italic;
+}
+
+.price-match-matchings {
+	position: relative;
+	top: -30px;
+	color: rgb(184, 151, 4);
+	font-size: 17px;
+	
+	font-family: 'monospace';
+	font-style: italic;
+}
