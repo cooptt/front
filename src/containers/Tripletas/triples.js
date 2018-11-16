@@ -142,13 +142,13 @@ class Triples extends Component {
 
 				<center>
 					<br></br>
-					<h5>Possible Triple Exchanges</h5>
+					<h5>Posibles Intercambios Triples</h5>
 				</center>
 
 				{this.state.cycles.length === 0 ? 
 					<center>
 						<font color="gray">
-							<h5>You don't have any Possible Triple Exchanges</h5>
+							<h5>No tienes Intercambios triples</h5>
 							<br></br><br></br><br></br><br></br><br></br><br></br>
 							<br></br><br></br><br></br><br></br><br></br><br></br>
 							<br></br><br></br><br></br><br></br><br></br><br></br>

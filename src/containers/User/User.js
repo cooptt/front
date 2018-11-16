@@ -115,7 +115,7 @@ class User extends Component {
 				<br></br><br></br><br></br>
 				
 				<div className="center-offers-table">
-					<SaleAndPurchaseOffers offerList={this.state.currentOfferList}/>
+					<SaleAndPurchaseOffers flagCanDelete = {false} offerList={this.state.currentOfferList}/>
 				</div>
 
                 <Footer/>
@@ -124,20 +124,21 @@ class User extends Component {
 					<SideNavChat userId={this.props.userId} destId={destUserId}/>:null}
 
 				
-				<div className="fixed-action-btn">
-          			<a className="btn-floating btn-large blue darken-4 pulse">
-            			<i className="large material-icons">menu</i>
-          			</a>
-        			
-					<ul>
-          				<li>
-							<a className="btn-floating green" onClick={this.handleOpenChat}>
-								<i className="material-icons">message</i>
-							</a>
-						</li>
-          			</ul>
+				{(this.props.userId!==null) ?
+					<div className="fixed-action-btn">
+						<a className="btn-floating btn-large blue darken-4 pulse">
+							<i className="large material-icons">menu</i>
+						</a>
+						
+						<ul>
+							<li>
+								<a className="btn-floating green" onClick={this.handleOpenChat}>
+									<i className="material-icons">message</i>
+								</a>
+							</li>
+						</ul>
+					</div> : null}
 
-      			</div>
          	</div>
     	);
 	}

@@ -10,6 +10,16 @@
   font-size: 15px;
 }
 
+.purchase-title {
+  position: relative;
+  left: 23%;
+}
+
+.sale-title {
+  position: relative;
+  left: -2%;
+}
+
 .user-name-profile {
   position: relative;
   top: -20px;
@@ -168,8 +178,6 @@ nav {
   box-shadow: 0 1px 0 0 #000 !important;
 }
 
-
-
 .img-circle {
     border-radius: 50%;
 }
@@ -209,4 +217,18 @@ nav {
   margin: auto;
   width: 60%;
   background-color: #ffffff;
+}
+
+.imagePremium {
+  position: relative;
+  top: -255px;
+  left: 57%;
+  width: 70px;
+  height: 70px;  
+}
+
+.button-premium {
+  position: relative;
+  top: 70px;
+  left: 43%;
 }

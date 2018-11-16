@@ -18,7 +18,7 @@ class SaleAndPurchaseOffers extends Component{
 
     createTableWithCurrentOffers = () => {
         let table = [];
-    
+        let counter = 0;
         // Outer loop to create parent
         let i = 0;
         let offersLength = this.props.offerList.length;
@@ -26,10 +26,12 @@ class SaleAndPurchaseOffers extends Component{
             let children = [];
             //Inner loop to create children
             for (let j = 0; j < 4 && i < offersLength; j++) {
-                children.push(<div className="col s3"><OfferCard offer={this.props.offerList[i++]}/></div>);
+                children.push(<div className="col s3" key = {'offerCardx' + counter}>
+                    <OfferCard flagCanDelete= {this.props.flagCanDelete} offer={this.props.offerList[i++]} deleteOffer={this.props.deleteOffer}/></div>);
+                counter++;
             }
             //Create the parent and add the children
-            table.push(<div className="row">{children}</div>);
+            table.push(<div className="row" key={"table" + i}>{children}</div>);
         }
     
         return table;

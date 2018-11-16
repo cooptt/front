@@ -76,7 +76,7 @@ class UserInfoAndRating extends Component {
 
                 <br></br>
             
-                {(parseInt(this.props.userId) !== this.props.destUserId) ?
+                {(parseInt(this.props.userId) !== this.props.destUserId) && (this.props.userId!==null)?
                     <div className="stars-div-profile">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
                         <span className="fa fa-star checked-profile" id="star1" onClick={() => {this.handleClickOnStar(1)}}></span>

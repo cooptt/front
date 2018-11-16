@@ -149,12 +149,12 @@ class VideoGames extends Component {
 
 				<div className="row">
 					<div className="col s6">
-						<p className="purchase-title">Purchase Offers</p>
+						<p className="purchase-title">Ofertas de Compra</p>
 
 					</div>
 
 					<div className="col s6">
-						<p className="sale-title">Sale Offers</p>
+						<p className="sale-title">Ofertas de Venta</p>
 					</div>
 				</div>
 
