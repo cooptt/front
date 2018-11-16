@@ -13,7 +13,7 @@ import './profile.css'
 // }
 
 const UserOfferCardRated = (props) => {
-	let linkToUserProfile = `/userprofile/${props.userId}`;
+    let linkToUserProfile = `/userprofile/${props.userId}`;
 	return (
         <div className="row">
             <div className="user">
@@ -30,7 +30,10 @@ const UserOfferCardRated = (props) => {
                             <center>
                                 <p className="userNameUserCard">{props.personName}</p>
                                 <p className="userEmailUserCard">{props.email}</p> 
-                                <p className="priceUserCard">{props.matches} Matching{props.matches>1?'s':null}</p>
+                                {props.type===1 ?
+                                    <p className="priceUserCard">{props.matches} Matching{props.matches>1?'s':null}</p>
+                                : <p className="priceUserCard">${props.matches}</p>
+                                }
                                 <br></br>
                             </center>
                         </div>		
